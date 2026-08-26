@@ -45,6 +45,10 @@ same commit.
 ⭐ **Tell to watch for: two probes on unrelated topics both citing the same third file.** That is
 staleness announcing itself.
 
+⛔ **Corrections are a prime source of this mode, not a cure for it** — a fix that names a
+*forward* direction ("the live route is X") is a fresh claim with a short shelf life. See
+`drift-protection.md` § *Corrections decay too*.
+
 ## 3. Partial instruction
 
 **Advice that is true and incomplete, and reads as complete.** The agent obeys it, believes the

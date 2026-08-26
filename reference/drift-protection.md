@@ -40,6 +40,30 @@ because there was nowhere to put the correction except beside the error.
 ⚠️ The usual objection is history loss. **Version control preserves it.** `git log -p` recovers any
 claim a correction overwrites, so correcting in place costs nothing that matters.
 
+## Corrections decay too — verify the fix, don't just make it
+
+⛔ **A correction is a claim like any other.** It can be stale on arrival, and the moment you write
+one is the moment you are *least* likely to check it: you have just proved something wrong, you
+feel current, and you write the replacement from what you believe rather than from the authority.
+
+*Real instance, same day:* a stale section was corrected under rule 7 — the fix said *"the live
+route is X, not Y"*. A probe hours later showed **X had itself been judged and rejected**, by a
+concurrent session, while the correction was being written. Staleness was fixed and re-introduced
+in one edit.
+
+**Two rules fall out of this:**
+
+1. ⭐ **When a correction names a *forward* direction — "the live route is…", "do this instead" —
+   verify that direction against its authority before writing it.** Recording what is closed is
+   cheap and safe. Recording what is *open* is a fresh claim with a short shelf life.
+2. ⭐ **Re-probe the entries you fixed, with new wording.** A fix verified only by the probe that
+   found the defect is not verified. This is the cheapest step in the method and it is the one
+   most likely to be skipped, because a fix feels finished.
+
+⚠️ **Highest-risk conditions for introducing staleness:** concurrent sessions landing verdicts in
+the same repo, and a long working session where your model of the docs was formed hours earlier.
+Both applied above.
+
 ## Declare one authority per fact kind
 
 Drift needs two copies. The cheapest prevention is to make the second copy illegitimate by name —
