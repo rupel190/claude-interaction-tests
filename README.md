@@ -1,6 +1,11 @@
-# Interaction Tests
+# Claude Interaction Tests
 
 **Tests for whether your AI agent actually recalls what your documentation knows.**
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
+> ⚠️ Not related to Storybook's "interaction tests". Nothing here touches your UI. The unit under
+> test is your **documentation**, and the thing being measured is an **agent's recall of it**.
 
 Not tests of your code. Tests of the *interaction* between an agent and the context structure you
 built for it — the `CLAUDE.md`, the `docs/`, the rules, the memory, the docstrings.
@@ -69,15 +74,32 @@ None of these are findable by reading. Reading is what produced them.
 | `reference/planning-rows.md` | making decisions *citable* so contradictions can be found |
 | `assets/` | copy-in guard test, probe template, index scaffold |
 
+## Works on any project
+
+Nothing here is specific to a language, framework, or domain. It needs only that your project has
+documentation an agent reads — `CLAUDE.md`, `AGENTS.md`, `docs/`, rules, docstrings — and that you
+care whether the agent actually uses it.
+
+`assets/index_scaffold.md` is a paste-ready starting structure; `assets/test_docs_index.py` is a
+copy-in guard test; `assets/probe_template.md` is the probe prompt and scoring sheet. Start from
+those rather than from a blank page.
+
 ## Install
 
 ```bash
-git clone <this repo> ~/src/interaction-tests
-ln -s ~/src/interaction-tests ~/.claude/skills/interaction-tests
+git clone https://github.com/rupel190/claude-interaction-tests ~/src/claude-interaction-tests
+ln -s ~/src/claude-interaction-tests ~/.claude/skills/interaction-tests
 ```
 
-Then ask Claude Code to *"run interaction tests on this project's docs"* or
-*"restructure CLAUDE.md as an index"*.
+Then ask Claude Code to *"run interaction tests on this project's docs"*, *"restructure CLAUDE.md
+as an index"*, or *"check whether our docs actually fire"*.
+
+Or use it without Claude Code at all: `SKILL.md` and `reference/` are plain method documentation,
+and the probe template works with any agent that can read a repo.
+
+## License
+
+MIT — see [LICENSE](LICENSE).
 
 ## Two rules that carry most of the value
 
