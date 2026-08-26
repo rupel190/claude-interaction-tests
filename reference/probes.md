@@ -36,6 +36,26 @@ work. Nothing in a mechanical guard can detect this.
 
 A run with no should-not-fire control is not an interaction test. It is a demo.
 
+### ⛔ Validate the control BEFORE the run, or you test your own ignorance
+
+A should-not-fire control is only a control if the work it proposes is **genuinely open**. Picking
+one is harder than it looks, and getting it wrong silently costs you the only measurement that
+detects over-firing.
+
+*Real instance, twice in two rounds:* both controls came back "already ruled out" and both times
+**the agent was right and the prediction was wrong** — once because the action the idea fed had
+been closed, once because the capability already existed in four scripts. Useful findings, but
+after two rounds **over-firing was still untested**, because no valid negative had been run.
+
+✅ **Cheap fix — spend two minutes before the round:** grep for the mechanism, the symbol, and the
+obvious synonyms. If anything comes back, the control is invalid; pick another. Best candidates are
+work with **no analogue in the repo** — a new output format, a new surface, an integration that
+does not exist — rather than a variation on something familiar.
+
+⚠️ **A control that fires is not automatically over-firing.** Check what the agent actually said:
+*"this was tried and rejected"* is a precision failure only if the thing is genuinely open;
+*"this already exists, use it"* means your control was invalid, not that the index is broken.
+
 ⭐ **When a control contradicts your prediction, suspect yourself first.** If a control comes back
 "already ruled out", either the index over-fires **or your belief about what's open is wrong**.
 Both are findings; the second is usually the more valuable one, and no other method detects it.
