@@ -124,6 +124,22 @@ Anything that dropped out must be re-added to the index — usually to the sourc
 deliberately re-homed. ⚠️ **Do this per extraction, not once at the end**: after several moves you
 can no longer tell which section owned which reference.
 
+### Archiving is an extraction — same orphan risk, plus two rules of its own
+
+Moving a doc to `archive/` is the same operation as moving a section to a findings file, so run the
+same location diff. Two extra rules:
+
+1. ⛔ **The archive must stay reachable from the index**, with a README saying *why each item is
+   there*. An archive nothing points at is the unreachable mode by construction — you have not
+   removed the material, you have hidden it.
+2. ⛔ **The archive README must state precedence in its first line**: if an archived doc disagrees
+   with a live one, **the live one wins**. Otherwise a future agent finds an archived answer, has
+   no way to know it is stale, and cites it with confidence.
+
+⚠️ Check for live→archive links after the move. A live doc pointing into the archive is the wrong
+way round: either the target should not have been archived, or the pointer should be updated to say
+"archived — kept as provenance".
+
 ## Durability — the bottom tier of the evidence base
 
 An index points at findings; findings cite **artefacts** — run directories, output bundles,

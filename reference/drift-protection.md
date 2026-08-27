@@ -70,6 +70,21 @@ Drift needs two copies. The cheapest prevention is to make the second copy illeg
 see the source-of-truth map in `organize.md`. A row that says *"thresholds live in the code symbol,
 **never** restated in prose"* converts a future drift into a rule violation someone can point at.
 
+## A rule the governed file already violates
+
+⛔ **When you write a source-of-truth rule, check the file it governs complies — at the moment you
+write it.** A rule with a silent standing exception is worse than no rule: it teaches the next
+session that the rules here are decorative, and it makes every genuine violation unarguable.
+
+*Real instance:* a map row said *"judged numbers live in the findings file, **never** quoted with
+numbers in the index"* — while the index legitimately quoted three standing reference constants,
+and a second doc pointed at the index as their home. Both halves were defensible; the rule was
+simply written too broadly and never checked against its own file.
+
+✅ **Fix:** narrow the rule to what you actually mean, and **declare the exception as a row of its
+own**. "Judged *A/B verdicts* live in findings; *standing reference constants* live in the index —
+the one declared exception." Now the rule is true, and a future violation is visible.
+
 ## The mechanical guard
 
 A unit test cannot check whether an entry *fires*, but it can pin the structural properties so they

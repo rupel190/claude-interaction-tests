@@ -64,6 +64,12 @@ ends the search with false confidence.**
 **Fix:** state what the instruction does *not* cover. **Prevention:** every procedural entry carries
 an explicit scope boundary — *"this does not cover X"* — as a required field, not a nicety.
 
+⭐ **The cheapest variant to catch: a documented COMMAND that does not run.** One audited repo's
+most-read section told you to run two tools that were not installed, and had for months — the
+instruction is true as *intent* and fails at the prompt. **Every command your docs tell someone to
+run should be executed by a guard**, or at minimum have its binary checked for existence. This is
+the one partial-instruction case a machine can find, so there is no excuse for finding it by hand.
+
 ## 4. Over-firing
 
 **The index suppresses legitimate work.** An entry scoped by *topic* instead of by *mechanism*

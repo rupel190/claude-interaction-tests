@@ -93,6 +93,20 @@ Full tells and fixes in `reference/taxonomy.md`. Named here so you recognise the
 it believes nondeterminism is handled while a second uncached call still moves. **A missing
 instruction leaves you searching; a partial one ends the search with false confidence.**
 
+## What this method does NOT find
+
+⚠️ Probes measure **recall of what is written**. They are weak at three things, and a conventional
+static audit is strong at all three — run both, they are complementary rather than competing:
+
+- **What was never written.** A probe cannot miss what it never had reason to ask about.
+- **Decay in the evidence base.** Artefacts a findings file cites can vanish without any probe
+  noticing, because the *prose* still reads fine.
+- **Config and data surfaces.** An unregistered flag, or a shared dict key whose meaning differs
+  between producers, makes two runs look comparable when they are not — and no amount of
+  documentation testing sees it.
+
+⭐ The division is clean: **probes find what does not fire; an audit finds what does not exist.**
+
 ## Non-negotiables
 
 - ⛔ **Controls in both directions, every run.** An index that flags *everything* as already-tried
