@@ -22,6 +22,7 @@ holds the detail. **Pull the reference file when its subject is in play.**
 1 MAP        where does each KIND of fact live?      → reference/organize.md
 2 ORGANIZE   index (loaded) over findings (pulled)   → reference/organize.md
 3 PROTECT    rules + guards so it cannot decay       → reference/drift-protection.md
+             the six guard patterns a machine CAN check → reference/guards.md
 4 TEST       blind probes with controls              → reference/probes.md
 5 READ       diagnose by failure mode, then fix      → reference/taxonomy.md
 ```
