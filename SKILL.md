@@ -108,6 +108,12 @@ static audit is strong at all three — run both, they are complementary rather 
 
 ⭐ The division is clean: **probes find what does not fire; an audit finds what does not exist.**
 
+⛔ **And when you run that audit, require it to list what is WORKING.** An audit that reports only
+problems reads as a mandate to change everything it names, and its next reader will "fix" decisions
+that were deliberate and already paid for. A section of *"these are load-bearing, do not touch"* is
+what makes the rest of it safe to act on — and it is the same instinct as the declined-proposal row
+in `reference/organize.md`: **recording a settled decision is as valuable as recording a defect.**
+
 ## Non-negotiables
 
 - ⛔ **Controls in both directions, every run.** An index that flags *everything* as already-tried

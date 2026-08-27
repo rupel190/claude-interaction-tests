@@ -30,6 +30,19 @@ Put this in the index. One row per *kind* of fact, naming the single authority f
 ⚠️ Two properties make a row worth writing: it names **one** authority, and it names what the fact
 must **never** be. The second half is what stops the copy that drifts.
 
+⭐ **Include shared DATA STRUCTURES, not only files.** A dict passed between pipeline stages, a
+JSON payload crossing a service boundary, a row shape several producers write — these are places
+facts live, and they usually have no declared owner at all.
+
+*Real instance:* a ~40-key dict passed between processing steps, undeclared. One key was set by one
+producer as a bounding box of the *containing region* and left unset by another. Two of that
+project's most expensive bugs traced to that single ambiguity — **a key whose meaning differs
+between producers is the same defect as a number written down twice**, and it is invisible to every
+documentation check because no document is wrong.
+
+A map row for it looks like any other: *what the key means · who owns that meaning · what it must
+never be silently reinterpreted as.*
+
 ### Verify the map with a reachability probe
 
 Not all probes test recall. One should test **location**: give an agent a task whose answer lives

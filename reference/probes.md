@@ -48,9 +48,23 @@ been closed, once because the capability already existed in four scripts. Useful
 after two rounds **over-firing was still untested**, because no valid negative had been run.
 
 ✅ **Cheap fix — spend two minutes before the round:** grep for the mechanism, the symbol, and the
-obvious synonyms. If anything comes back, the control is invalid; pick another. Best candidates are
-work with **no analogue in the repo** — a new output format, a new surface, an integration that
-does not exist — rather than a variation on something familiar.
+obvious synonyms, and check the plan file says the work is open. If anything comes back, the
+control is invalid; pick another.
+
+### Weak negatives pass for free — aim at the boundary
+
+⚠️ Verifying openness is necessary and not sufficient. A control so unrelated that nothing could
+plausibly fire — *"add a GraphQL API"* to an image pipeline — passes trivially and measures
+nothing. Over-firing happens at the **edges of a class**, so that is where a negative has to sit.
+
+**A strong negative is both:**
+- **genuinely open** — verified by grep and by the plan's own status, and
+- **adjacent to a closed class**, differing from it by *mechanism* rather than by subject.
+
+⭐ **The cleanest form is a paired probe on ONE row:** one proposal inside the class and one
+outside it, same subject, different mechanism. If the row fires on the first and stays silent on
+the second, the boundary is where you drew it — which is a far stronger result than either probe
+alone, and it isolates precision from recall in a single round.
 
 ⚠️ **A control that fires is not automatically over-firing.** Check what the agent actually said:
 *"this was tried and rejected"* is a precision failure only if the thing is genuinely open;
