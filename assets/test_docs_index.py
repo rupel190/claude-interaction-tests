@@ -83,6 +83,12 @@ def test_every_findings_file_is_reachable() -> None:
     assert not orphans, f"unreachable findings files: {orphans}"
 
 
+def test_declined_rows_state_what_would_reopen_them() -> None:
+    """A decision with no reopen condition reads as permanent when it was contingent."""
+    bad = [r for r in _rows() if "DECLINED" in r.upper() and "reopen" not in r.lower()]
+    assert not bad, "declined rows with no reopen condition:\n" + "\n".join(bad)
+
+
 def test_no_pointer_targets_a_missing_file() -> None:
     refs = set(re.findall(r"`((?:docs|\.)/[\w/.-]+\.md)`", _index_block()))
     missing = sorted(r for r in refs if not (ROOT / r).exists())

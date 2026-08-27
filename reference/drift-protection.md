@@ -29,6 +29,9 @@ that needs it is the one adding an entry, and it will be looking at the table.
 >    what changed; put the story in the findings file. ⚠️ Rule 6 governs **new** results, rule 7
 >    governs **falsified** ones — the licence to rewrite comes from disproof, never disagreement.
 > 8. ✅ **Every findings file must be reachable from an entry** — guarded by a test.
+> 9. ⚠️ **A DECLINED proposal is not a refuted one.** Mark it distinctly, carry the evidence that
+>    informed it, and state **what would reopen it**. If it declines a recommendation from a dated
+>    report, name the report — snapshots keep recommending forever and will be re-read.
 
 ### Why rule 7 matters more than it looks
 

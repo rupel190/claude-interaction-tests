@@ -83,6 +83,37 @@ Four parts, all load-bearing:
 3. **The verdict** — inline, because the pull may not happen.
 4. **The pointer** — where the evidence lives, restating none of it.
 
+### A third kind of row: the DECLINED proposal
+
+Not everything worth recording was tried. Some things were **proposed, considered with evidence,
+and deliberately not done** — and they will be proposed again, because the reasoning that suggested
+them was sound.
+
+⛔ **Do not file these as refuted.** "We tried it and it failed" and "we considered it and chose
+not to" are different facts, and blurring them makes the index untrustworthy in both directions.
+Mark them distinctly (`⚠️ considered <date> and DECLINED`) and require two extra things:
+
+1. ⭐ **The evidence that informed the decision** — otherwise the next session cannot tell a
+   judgement from a whim, and will reasonably re-open it.
+2. ⭐ **The condition that would REOPEN it.** A decision with no reopen condition reads as
+   permanent when it was contingent. *"Reopen if a probe ever fails on this file"* converts a
+   standing "no" into a testable one.
+
+### ⛔ Dated reports do not expire — record decisions AGAINST them
+
+An audit, a research pass or a consultant's report is a **point-in-time snapshot**. It keeps
+recommending whatever it recommended, forever, and it gets re-read. If you decline one of its
+recommendations, the report will not learn.
+
+*Real instance:* an audit recommended restructuring a large plan file. The recommendation was
+sound, and was declined on evidence the audit did not have — interaction probes showing the file
+worked as-is. Without a record, the next session reads the audit, sees a sensible unimplemented
+recommendation, and re-litigates a decision already made with better information.
+
+✅ **The decision goes in the live index, not in the report.** Never edit a dated report to reflect
+a later decision — that destroys its value as a snapshot. Instead the index row names the report
+and says *"this recommendation was read and declined, not missed."*
+
 ### What stays loaded, what moves
 
 | stays in the index | moves to a findings file |
