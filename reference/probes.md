@@ -66,6 +66,24 @@ outside it, same subject, different mechanism. If the row fires on the first and
 the second, the boundary is where you drew it — which is a far stronger result than either probe
 alone, and it isolates precision from recall in a single round.
 
+✅ **Validated.** Run on a row reading *"any rule that assigns stitch type from a MEASUREMENT"*:
+the in-class proposal (derive type from a shape ratio) fired and named the exact retired
+predecessor; the out-of-class proposal (let a human set type on a named part) did **not** fire and
+correctly identified the open plan row for it. Same subject, opposite verdicts, boundary confirmed
+in one round — after two earlier rounds where over-firing could not be measured at all.
+
+### Keep the MECHANISM separable from the EXAMPLE
+
+⚠️ The out-of-class probe above used a concrete illustration — *"make the calyx satin"* — and the
+illustration was **wrong**: that part's measured defect is direction, not type, and both cures for
+it had been rejected. The agent said so, and the round still worked, because the mechanism under
+test (*addressing* vs *measurement*) did not depend on which part was named.
+
+**Write probes so a bad example cannot invalidate the result.** State the mechanism plainly and let
+the example be incidental. If your probe only makes sense with one specific example, you are
+testing that example, not the class — and you will not be able to tell a boundary failure from a
+badly chosen illustration.
+
 ⚠️ **A control that fires is not automatically over-firing.** Check what the agent actually said:
 *"this was tried and rejected"* is a precision failure only if the thing is genuinely open;
 *"this already exists, use it"* means your control was invalid, not that the index is broken.
