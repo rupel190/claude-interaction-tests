@@ -98,6 +98,52 @@ large context window it usually is — then over-cutting is the failure mode. An
 past the point where it fires costs you exactly the rebuild you were preventing. Keep recall
 generous; cut evidence hard.
 
+## ⛔ Extraction ORPHANS locations — check before and after
+
+**When you move a section out of the always-loaded file, every *location* it mentioned leaves with
+it.** The index gains one pointer (to the new findings file) and silently loses every pointer that
+section carried. Nothing warns you, and the result is the **unreachable** mode created *by* the
+restructure meant to prevent it.
+
+*Real instance:* a restructure moved one section to a findings file. The always-loaded file went
+from four mentions of a `rulebook/` directory — the project's craft-rule authority, containing the
+reason a whole class of output was mis-tagged — to **zero**. An audit found it; nobody reading the
+diff had.
+
+✅ **The check is mechanical and takes seconds.** Before and after the extraction, diff the set of
+paths and directory names the index mentions:
+
+```bash
+grep -oE '`[a-zA-Z0-9_./-]+/[a-zA-Z0-9_./-]*`' INDEX.md | sort -u > /tmp/before.txt
+# ...extract...
+grep -oE '`[a-zA-Z0-9_./-]+/[a-zA-Z0-9_./-]*`' INDEX.md | sort -u > /tmp/after.txt
+comm -23 /tmp/before.txt /tmp/after.txt      # locations you just made unreachable
+```
+
+Anything that dropped out must be re-added to the index — usually to the source-of-truth map — or
+deliberately re-homed. ⚠️ **Do this per extraction, not once at the end**: after several moves you
+can no longer tell which section owned which reference.
+
+## Durability — the bottom tier of the evidence base
+
+An index points at findings; findings cite **artefacts** — run directories, output bundles,
+generated reports. That bottom tier is where the strategy usually rots, because it is large,
+untracked, and nobody is watching it.
+
+⛔ **A measurement whose artefact is gone is unfalsifiable.** It reads as evidence and cannot be
+checked, re-derived, or refuted. In one audited repo, several run directories cited *by name* in
+the docs no longer existed — the verdicts resting on them had quietly become assertions.
+
+✅ **The fix that works is small, tracked and self-describing.** Not the 18 GB of raw output — a
+per-session JSON holding the inputs, the arms, and the raw answers, committed alongside the docs.
+It is a fraction of a percent of the size and it is the only tier that survives a disk.
+
+**Checklist:**
+- [ ] Every artefact a findings file cites is either **tracked**, or has a tracked summary
+- [ ] Raw judgements (A/B answers, rankings, labels) are committed as data, not just prose
+- [ ] The index's source-of-truth map **names that durable location** — otherwise it is unreachable
+- [ ] Periodically: extract every artefact name the docs cite and check it still exists
+
 ## Move 3 — Write the maintenance rule at the point of use
 
 Put it *in* the index, immediately above the entries — not in a separate contributing guide. The

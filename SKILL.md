@@ -72,6 +72,8 @@ symbol, never by value.
 [ ] Run probes: one per fresh agent, blind, read-only, vocabulary NOT in the entry
 [ ] Include should-NOT-fire controls — always
 [ ] Score by failure mode (reference/taxonomy.md), fix, re-probe
+[ ] After each extraction: diff the LOCATIONS the index names, re-add what dropped
+[ ] Check every artefact your findings cite still exists — unfalsifiable is not evidence
 ```
 
 ## The six failure modes
