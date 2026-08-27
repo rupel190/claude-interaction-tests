@@ -82,6 +82,44 @@ purpose is "a declared-but-unimplemented check must be loud, not silent" — and
 guards had that exact bug.** The lesson had been learned in one place and never generalised.
 **When you write a guard, ask what it does when it cannot see.**
 
+### ⚠️ "Fail on what you cannot see" is too blunt — classify first
+
+The first attempt at this fix failed on *every* non-literal, and it was wrong. Scanning for
+declared values, three cases look identical to a bare `isinstance` check and are not:
+
+| the site | example | what it means | do |
+|---|---|---|---|
+| **literal** | `precision=4` | a declared value | collect it |
+| **forwarding** | `precision=self.precision` | declares **nothing** — passes one through | skip; there is nothing to miss |
+| **computed** | `precision=f(x)`, an f-string, a conditional | a declared value the scan **cannot read** | ⛔ fail, with the line |
+
+⛔ **Failing on forwarding makes the guard unusable** — every wrapper and every constructor forwards
+— and the usual response is to loosen it back to silence. The distinction between *"a value I cannot
+read"* and *"no value here at all"* is what makes a loud guard survivable.
+
+### The declaration hatch: legal invisibility that still gets checked
+
+Some indirection is legitimate (a helper resolving several keys through one parameter). The hatch
+that works has three parts, and the second is what stops it becoming a hole:
+
+1. **Declare** the file and **what it reads** — an allowlist entry, not a blanket exemption.
+2. ⭐ **Check the declared names anyway**, against the same registry every visible name is checked
+   against. Declaring something cannot exempt it from the actual rule; it only exempts it from
+   being *seen* automatically.
+3. ⭐ **Fail on a stale declaration** — if the file no longer has an unresolvable site, the entry
+   must go. An allowlist that outlives its reason quietly widens what the guard permits, and
+   nothing else will ever notice.
+
+### ⭐ Guards catch each other — build the network, not the guard
+
+Registering the two newly-visible switches immediately failed a *different* guard, one requiring
+every value-carrying switch to name the code that consumes it. Nothing had connected those two
+tests; the second simply refused to let a switch exist without a consumer.
+
+**A guard network has emergent coverage a single guard cannot.** When adding one, check what else
+goes red — that is the network telling you what your change actually means, and it is usually the
+cheapest review you will get.
+
 ## Mutation-test every guard
 
 Non-negotiable, and doubly so after any change to the guard's own parsing. See
