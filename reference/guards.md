@@ -11,7 +11,7 @@ probe   costly, occasional, judgement      "does an agent recall this?"
 ⛔ **Neither substitutes for the other.** A guard cannot tell you an entry is phrased too narrowly
 to fire; a probe cannot run on every push.
 
-## The seven patterns
+## The eight patterns
 
 Each was found in production use, guarding a defect that had already happened.
 
@@ -67,6 +67,45 @@ shapes in `probes.md` § *Not every miss costs the same*.
 ⚠️ It needs the boundary to be enumerable — one vault folder, one label, one directory. If
 "outside" has no address, this guard cannot be written, and that is itself worth knowing before
 you rely on the transport.
+
+### 8. Declared boundary ↔ actual index (**the ignore file is intent, not reality**)
+**Catches:** knowledge quietly excluded from version control, and excluded material quietly
+tracked. Both are the same defect — a boundary that is *declared* and never *compared to reality*.
+**Shape:** two directions, and you need both.
+
+```bash
+# A — tracked DESPITE matching an ignore rule.  Exact; git has it built in.
+git ls-files -i -c --exclude-standard
+
+# B — knowledge sitting inside a fully-ignored tree.  Heuristic; scope it (below).
+fd -e md -t f . --no-ignore --exclude .git | while read -r f; do
+  git check-ignore -q "$f" && ! git ls-files --error-unmatch "$f" >/dev/null 2>&1 && echo "$f"
+done
+```
+
+*Origin: one session, both directions, three repos. A found 47 files tracked under an ignore rule
+added five months after them, and 1 more elsewhere. B found the **author's own fix from that same
+session** — a defect correction written into a file inside the ignored tree, with a commit message
+asserting the fix while git held no record of it.*
+
+⭐ **The fix for an accepted exception is to DECLARE it, never to silence the check.** Both hits
+above were legitimate; the problem was that the exception lived only in the index. Writing it into
+the ignore file makes the file describe what is true and returns the check to empty — which is the
+same move as declaring an authority instead of letting it be inferred.
+
+⛔ **Two mechanics that will waste your afternoon:**
+
+- **`git check-ignore -v <file>` reports NO RULE for a tracked file** and exits 1 — git's model is
+  that ignore rules do not apply to tracked files. So the obvious way to diagnose a direction-A hit
+  says "nothing matches" and reads exactly like a broken guard. Use `--no-index` to see the rule.
+- **You cannot re-include a file whose parent DIRECTORY is excluded.** `Images/` + `!Images/Samples/`
+  silently does nothing. It has to be `Images/*` + `!Images/Samples/`, and the difference is
+  invisible until you test it.
+
+⚠️ **Direction B over-fires unless you scope it**, because generated output is markdown too. Run it
+raw and you get every `comparison_report.md` under `tests/output/`. Exclude the regenerable trees
+first, or it produces noise and gets switched off — which is the failure mode this whole file is
+about. Direction A needs no scoping and is worth wiring up on its own.
 
 ## ⛔ The cross-cutting failure: liveness is not completeness
 
