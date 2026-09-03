@@ -11,6 +11,46 @@ probe   costly, occasional, judgement      "does an agent recall this?"
 ⛔ **Neither substitutes for the other.** A guard cannot tell you an entry is phrased too narrowly
 to fire; a probe cannot run on every push.
 
+## Where a guard runs decides what it can DO
+
+Not every guard belongs at commit time, and getting this wrong is why some of them never get
+written. Two homes, and the split is by **who the output is for**:
+
+```
+pre-commit / CI     the repo is the consumer.  BLOCKING.
+                    "this must be true before this lands"
+                    patterns 1, 2, 3, 4, 5, 6, 8
+
+SessionStart hook   the AGENT is the consumer.  NON-BLOCKING, injected as context.
+                    "you may be working from a stale picture"
+                    pattern 7, and the advisory half of 8
+```
+
+⭐ **Pattern 7 cannot live at commit time**, and that is not a limitation — it is what it is for.
+What it detects is not a defect in the change being committed; it is a gap in what the person or
+agent making the change *knows*. Blocking a commit over it would be wrong, and running it hours
+later in CI would be useless, because by then the reasoning is already done. It has to arrive
+**before the work starts**.
+
+**In Claude Code that means three tracked files per repo** — the check, and its registration:
+
+```
+repo/
+  <scripts dir>/check-<thing>.sh      executable, tracked, so it travels with the repo
+  .claude/settings.json               hooks.SessionStart[0].hooks[] — one entry per check
+```
+
+The script emits JSON on stdout — `hookSpecificOutput.additionalContext` is what reaches the
+model, `systemMessage` is the one line the human sees — and prints **nothing** when the check
+passed. ⛔ **Emitting plain text instead shows the human and tells the model nothing**, which
+silently defeats a guard whose entire consumer is the model. Register the command as
+`./path/to/check.sh 2>/dev/null || true` so a broken check can never block a session — the check
+itself is responsible for being loud, not the shell.
+
+⚠️ The settings watcher only watches directories that already held a settings file when the
+session began. A newly created `.claude/settings.json` needs `/hooks` opened once, or a restart,
+before its hooks fire.
+
 ## The eight patterns
 
 Each was found in production use, guarding a defect that had already happened.
