@@ -68,6 +68,22 @@ shapes in `probes.md` § *Not every miss costs the same*.
 "outside" has no address, this guard cannot be written, and that is itself worth knowing before
 you rely on the transport.
 
+⛔ **Do NOT key it on modification time.** The obvious implementation — newest `mtime` on the other
+side vs. the sync date — is wrong, and it fails in the direction that destroys the guard: it
+invents work. Notes get touched by sync clients, by plugins rewriting frontmatter on open, by a
+backup walking the tree. *Measured in one vault:* a meeting note had drifted five days past its
+last real edit, and another carried an mtime **earlier than the meeting it recorded**. The check
+reported an outstanding transcription that did not exist, and that was passed on to the user as a
+task.
+
+✅ **Key it on what the artefact DECLARES** — a `YYYY-MM-DD` filename prefix, a `date:` field, a
+ticket's closed-at. Those survive a touch. Fall back to mtime only for items carrying neither, and
+know that you are then measuring something weaker.
+
+⭐ **The general form, worth carrying to any guard: prefer a signal the source ASSERTS over one the
+filesystem happens to record.** Asserted signals are stable and mean what they say; incidental ones
+drift, and a guard that cries wolf is switched off long before it is fixed.
+
 ### 8. Declared boundary ↔ actual index (**the ignore file is intent, not reality**)
 **Catches:** knowledge quietly excluded from version control, and excluded material quietly
 tracked. Both are the same defect — a boundary that is *declared* and never *compared to reality*.
