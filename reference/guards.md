@@ -32,13 +32,35 @@ agent making the change *knows*. Blocking a commit over it would be wrong, and r
 later in CI would be useless, because by then the reasoning is already done. It has to arrive
 **before the work starts**.
 
-**In Claude Code that means three tracked files per repo** — the check, and its registration:
+⭐⭐ **Install the script ONCE, at user level. The per-repo part is the CONFIG, never the code.**
+
+This is the mistake worth not repeating: both guards here were first written into each repo, one
+copy per project, and both copies were **byte-identical**. A duplicated script is the same defect
+the guards exist to catch, wearing a hook costume — and it was installed by the person who had
+spent the week removing exactly that.
 
 ```
-repo/
-  <scripts dir>/check-<thing>.sh      executable, tracked, so it travels with the repo
-  .claude/settings.json               hooks.SessionStart[0].hooks[] — one entry per check
+~/.claude/hooks/check-<thing>.sh    ONE copy. Generic. Runs in every repo, forever,
+                                    including repos that do not exist yet.
+~/.claude/settings.json             hooks.SessionStart[] — registered once.
+
+repo/<any convention>.md            the CONFIG, if the check needs any. This is the
+                                    only per-repo artefact, and a repo OPTS IN simply
+                                    by having it.
 ```
+
+⭐ **A generic check finds its own config by convention and stays silent when there is none** —
+absence means "this repo has not opted in", which is not a defect and must not complain. Once a
+repo *has* opted in, the strictness returns in full: every way the check can then fail to run
+speaks up.
+
+⚠️ **Test the "not opted in" and "outside a repo at all" paths explicitly.** A user-level hook runs
+everywhere, including scratch directories and other people's checkouts, so its quiet paths get
+exercised constantly and any stray stderr becomes noise in every session you ever start.
+
+⚠️ **Hooks arrive one session late on other machines.** If config sync is itself a SessionStart
+hook, the settings file was already read before that sync ran — so a newly added hook is only live
+from the *next* session on that machine. Not a bug; just do not conclude it is broken.
 
 The script emits JSON on stdout — `hookSpecificOutput.additionalContext` is what reaches the
 model, `systemMessage` is the one line the human sees — and prints **nothing** when the check
