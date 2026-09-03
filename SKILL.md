@@ -19,10 +19,11 @@ holds the detail. **Pull the reference file when its subject is in play.**
 ## The five moves
 
 ```
-1 MAP        where does each KIND of fact live?      → reference/organize.md
+1 MAP        where does each KIND of fact live —      → reference/organize.md
+             INCLUDING the kinds decided outside the repo
 2 ORGANIZE   index (loaded) over findings (pulled)   → reference/organize.md
 3 PROTECT    rules + guards so it cannot decay       → reference/drift-protection.md
-             the six guard patterns a machine CAN check → reference/guards.md
+             the seven guard patterns a machine CAN check → reference/guards.md
 4 TEST       blind probes with controls              → reference/probes.md
 5 READ       diagnose by failure mode, then fix      → reference/taxonomy.md
 ```
@@ -72,6 +73,11 @@ symbol, never by value.
 [ ] Write predictions + confidence, before running anything
 [ ] Run probes: one per fresh agent, blind, read-only, vocabulary NOT in the entry
 [ ] Include should-NOT-fire controls — always
+[ ] If knowledge governs this repo from OUTSIDE it (vault, tickets, meetings):
+    copy assets/decisions_scaffold.md, name the watched folders and a sync date,
+    put the authority line in the INDEX (not in the file it governs), then probe
+    it — cross-boundary probe plus a positive control read FIRST, or a miss is
+    unattributable. Rule: reference/organize.md § authorities OUTSIDE the repo
 [ ] Score by failure mode (reference/taxonomy.md), fix, re-probe
 [ ] After each extraction: diff the LOCATIONS the index names, re-add what dropped
 [ ] Check every artefact your findings cite still exists — unfalsifiable is not evidence

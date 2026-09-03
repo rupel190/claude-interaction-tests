@@ -33,6 +33,7 @@ work. Nothing in a mechanical guard can detect this.
 | **should-fire** | something genuinely closed, phrased differently | fires |
 | **should-not-fire** | genuinely open, novel, or adjacent-but-different work | does **not** fire |
 | **reachability** | something answerable only from a docstring or non-indexed file | reaches it |
+| **cross-boundary** | something decided *outside* the repo — a meeting, a vault, a ticket | reaches it |
 
 A run with no should-not-fire control is not an interaction test. It is a demo.
 
@@ -92,6 +93,24 @@ badly chosen illustration.
 "already ruled out", either the index over-fires **or your belief about what's open is wrong**.
 Both are findings; the second is usually the more valuable one, and no other method detects it.
 
+### Probing across a boundary
+
+Some knowledge that governs a repo does not live in it — it is in a notes vault, a ticket, a
+meeting write-up, a client's inbox. A **cross-boundary probe** asks an ordinary working question
+whose correct answer was decided outside, and measures whether the decision arrived.
+
+⛔ **Add a positive control, and read it FIRST.** With in-repo probes a miss means the entry is
+weak. Across a boundary a miss is ambiguous — the docs may simply be bad — so you need one probe
+on something the repo genuinely documents well. If that fires and the boundary probes do not, the
+failure isolates to the *link*. If it also misses, throw the round out: you are measuring
+documentation quality, not transport.
+
+⭐ **The finding is rarely "the fact is absent."** In practice the repo holds a *neighbouring*
+version — the destination but not the agreement, the earlier direction but not the revision — and
+that is worse than silence, because it reads as coverage. Watch specifically for a probe that
+lists an already-settled question as **open**: that is the transport failure with a price tag on
+it, and grep cannot see it because the words are all present.
+
 ## Write predictions first
 
 Before any probe runs, record for each: the expected outcome **and your confidence**.
@@ -105,6 +124,16 @@ C1     use source shading for direction  genuinely open   does NOT fire ~55%
 
 A miss then localises **one** wrong belief instead of being rationalised after the fact. The
 confidence column matters: a confident miss is a different problem from an uncertain one.
+
+⚠️ **Do not derive predictions from grep — it biases them in one direction.** A search proves a
+*phrase* is absent, never that the *knowledge* is. Predict absence from a grep and you will
+under-estimate the docs systematically, because the same fact reaches an agent through a
+paraphrase, an adjacent file, or a document you forgot indexes it.
+
+*Real instance:* three predictions written off greps, all confidently "does not reach it", all
+three wrong the same way — and one of the three was not a defect at all but the split working
+correctly. **The direction of your misses is itself a finding.** All-one-way means you predicted
+from the wrong instrument; scattered means the docs are genuinely uneven.
 
 ## Reading `WHAT INFORMED YOU`
 
@@ -133,6 +162,26 @@ defects surfaced incidentally      → the real yield
 ⭐ **The fourth number is usually the largest.** Probes find contradictions between files as a side
 effect of answering an unrelated question — two probes asking about different topics converging on
 the same stale section is a strong signal, and it is how the method pays for itself.
+
+### Not every miss costs the same — score the SHAPE of the failure
+
+A probe that does not fire can fail safely or expensively, and the difference is what decides
+whether a gap is worth fixing:
+
+```
+"nothing here specifies X — you will have to tell me"     SAFE.      costs a question.
+"X has not been decided; this is the first thing to
+ settle"                                                  EXPENSIVE. costs a meeting,
+                                                          and re-opens a closed decision.
+```
+
+⛔ **The same missing fact produces both**, depending only on whether the surrounding docs invite
+the agent to reason forward. So *"the fact is absent"* is not the finding — **what the agent did
+with the absence is the finding.** A round where every miss is the safe kind may need no fix at
+all; one expensive miss justifies the whole mechanism.
+
+⚠️ This is also the distinction a static audit cannot produce. An audit tells you the fact is
+missing; only a probe tells you it will be confidently spoken over.
 
 ## How many probes
 

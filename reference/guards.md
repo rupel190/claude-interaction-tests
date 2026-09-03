@@ -11,7 +11,7 @@ probe   costly, occasional, judgement      "does an agent recall this?"
 ⛔ **Neither substitutes for the other.** A guard cannot tell you an entry is phrased too narrowly
 to fire; a probe cannot run on every push.
 
-## The six patterns
+## The seven patterns
 
 Each was found in production use, guarding a defect that had already happened.
 
@@ -49,6 +49,24 @@ findings files becoming unreachable, the maintenance rule being deleted.
 **Shape:** a fixture row whose correct output you fix in advance, plus a row that must NOT match.
 *Origin: a plan-status tool special-cased an id prefix instead of dispatching on structure — it
 fixed four rows and silently broke two.*
+
+### 7. Cross-boundary freshness (**staleness must announce itself**)
+**Catches:** a decision made outside the repo — in a notes vault, a ticket, a meeting write-up —
+that never arrived, in the window where an agent will confidently reason past it.
+**Shape:** the inbound log carries a `last synced from <source>: <date>` line. The guard compares
+it to the newest artefact on the other side and fails when the source is ahead. It cannot tell you
+*what* is missing; it makes "something may be" a stated fact instead of a silence.
+*Origin: a client meeting reversed a documented direction and the repo never heard. Probed six days
+later, an agent listed the settled decision as the first thing to go and decide.*
+
+⭐ **This is the one guard whose value is a hedge rather than a fact.** Everything else here
+asserts a property is still true. This one converts an invisible gap into an audible *"I may be
+working from a stale picture"* — which is the difference between the safe and expensive failure
+shapes in `probes.md` § *Not every miss costs the same*.
+
+⚠️ It needs the boundary to be enumerable — one vault folder, one label, one directory. If
+"outside" has no address, this guard cannot be written, and that is itself worth knowing before
+you rely on the transport.
 
 ## ⛔ The cross-cutting failure: liveness is not completeness
 

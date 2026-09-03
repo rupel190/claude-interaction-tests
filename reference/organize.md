@@ -40,6 +40,46 @@ project's most expensive bugs traced to that single ambiguity — **a key whose 
 between producers is the same defect as a number written down twice**, and it is invisible to every
 documentation check because no document is wrong.
 
+### ⭐ Some authorities are OUTSIDE the repo
+
+The map above assumes every authority is a file in the tree. Often the most consequential ones are
+not: what the client agreed, what a meeting decided, what the contract says. Those live in a notes
+vault, a ticket, an inbox — and they reach the repo only when a human transcribes them.
+
+**The rule for which side owns a fact:**
+
+```
+OUTSIDE wins   what was agreed · what the client wants · scope · commercial terms
+REPO wins      what the code does · what a number measures · what a source file contains
+
+the test:  could this have changed by someone editing a file?
+           yes → repo.    it changed because people talked → outside.
+```
+
+⛔ **Declare it; never let an agent infer it from quality of argument.** In-repo reasoning
+accumulates — measured, cross-referenced, defended over months. The decision that overturns it
+arrives as one line in a meeting note, because that is how decisions arrive. Weighed on merit the
+repo wins every time, and it is *wrong* every time. See `taxonomy.md` § Staleness for the case
+where an agent recommended correcting a client's specification to remove what the client had just
+asked for.
+
+**Three things make this work, and the third is the one people skip:**
+
+1. **One inbound file**, in the repo, tracked — the decisions that arrived. Not a mirror of the
+   outside source; only what changes what gets built.
+2. **The authority line, in the always-loaded index**, not in the file it governs. The agent needs
+   the rule *before* it reads either document.
+3. ⭐ **A named, enumerable boundary and a sync date.** *"Decisions come from Obsidian"* is not
+   addressable. *"These two folders, last synced 2026-08-28"* is — it can be listed, diffed and
+   guarded (`guards.md` pattern 7). Without an address there is no guard, and the transport is
+   discipline alone.
+
+⚠️ **Distinguish the folders that DECIDE from the ones that merely inform.** A project's notes
+usually hold years of background beside a handful of live decisions. Watching everything makes the
+guard fire constantly and be ignored; watching nothing misses the one note that mattered. Name both
+tiers, with different jobs — *"this folder changes what gets built; this one is reference you may
+consult."*
+
 A map row for it looks like any other: *what the key means · who owns that meaning · what it must
 never be silently reinterpreted as.*
 

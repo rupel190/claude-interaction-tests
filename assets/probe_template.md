@@ -21,6 +21,34 @@ Reply with exactly these three sections:
    in the repo informed you and this is your own reasoning, say "general reasoning only".
 ```
 
+## Variant — cross-boundary probe
+
+For knowledge decided **outside** the repo (a vault note, a meeting, a ticket). The proposal form
+above does not fit: you are not testing whether a closed idea gets refused, you are testing whether
+a decision arrived. So ask a working question instead, and let the agent volunteer the state.
+
+```
+You are working in the repository at [ABSOLUTE PATH].
+
+READ-ONLY: do not edit any file; do not run builds, tests, installs or long-running
+commands. Read and grep as needed.
+
+[QUESTION — an ordinary thing you would ask a colleague on day one, whose correct
+answer was settled outside this repo. e.g. "Where is this meant to run in
+production, and who operates it?" Do NOT name the decision, the meeting or the
+source. Ask for what the project already assumes, and what is still undecided.]
+
+End with a section headed exactly WHAT INFORMED YOU, naming the files and sections
+you relied on, or the exact words "general reasoning only".
+```
+
+⭐ **Score it on the shape of the miss, not just fire/no-fire.** *"Nothing here specifies that"* is
+a safe miss and may need no fix. **A probe that lists the settled thing among its open questions is
+the expensive miss** — that is the one worth building transport for.
+
+⛔ Run a positive control on well-documented in-repo knowledge in the same round, and read it
+first. Without it a miss cannot be attributed to the boundary rather than to weak docs.
+
 ## Scoring sheet
 
 | probe | proposal | phrased as | predicted | confidence | actual | read |

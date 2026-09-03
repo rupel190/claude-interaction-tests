@@ -45,6 +45,23 @@ same commit.
 ⭐ **Tell to watch for: two probes on unrelated topics both citing the same third file.** That is
 staleness announcing itself.
 
+⛔ **The dangerous sub-case: the stale document is BETTER ARGUED than the thing that superseded
+it.** Reasoning accumulates in a repo — a position gets defended, measured, cross-referenced, and
+earns its place. The decision that overturns it arrives as one line in a meeting note, because
+that is how decisions actually arrive. An agent weighing the two on merit picks the stale one
+**every time**, and it is right to, given only the two texts.
+
+*Real instance:* a repo ranked auto-detection last and mock-only, justified by *"the estimators
+already produce structured markup — the machine-readable data exists without any vision model."*
+A client meeting six days later made auto-detection the centre of the feature. Probed, the agent
+recommended **correcting the specification** to remove what the client had just asked for.
+
+**Fix:** declare the authority explicitly, at the point of use — *"when `DECISIONS.md` contradicts
+the reasoning here, `DECISIONS.md` wins; the reasoning was sound when written and has been
+overtaken."* **Prevention:** authority is a property you assign per *kind of fact*, never one an
+agent infers from how well a passage argues. Quality of argument is the exact signal that fails
+here.
+
 ⛔ **Corrections are a prime source of this mode, not a cure for it** — a fix that names a
 *forward* direction ("the live route is X") is a fresh claim with a short shelf life. See
 `drift-protection.md` § *Corrections decay too*.
