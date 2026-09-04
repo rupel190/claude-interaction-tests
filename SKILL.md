@@ -71,6 +71,9 @@ symbol, never by value.
 [ ] Write the maintenance rule at the point of use
 [ ] Copy assets/test_docs_index.py, adjust, MUTATION-TEST it
 [ ] Write predictions + confidence, before running anything
+[ ] Write down WHICH CHANNELS THE HARNESS CAN REACH, before running anything — subagent probes
+    typically inherit project-level docs but NOT user-level memory, so a memory-borne entry is
+    untestable this way. Unstated, a miss gets misattributed to the docs after the fact
 [ ] Run probes: one per fresh agent, blind, read-only, vocabulary NOT in the entry
 [ ] Include should-NOT-fire controls — always
 [ ] If knowledge governs this repo from OUTSIDE it (vault, tickets, meetings):
@@ -108,6 +111,12 @@ static audit is strong at all three — run both, they are complementary rather 
 - **What was never written.** A probe cannot miss what it never had reason to ask about.
 - **Decay in the evidence base.** Artefacts a findings file cites can vanish without any probe
   noticing, because the *prose* still reads fine.
+  ⭐ **But this depends on how the probe is FRAMED, and you can buy some of it back for free.** A
+  probe phrased *"is this allowed?"* only reads prose. A probe phrased **"build this / plan this"**
+  forces the agent to open the artefacts the prose depends on — so it finds vanished evidence,
+  contaminated numbers and mis-stated corpora as a side effect of trying to do the work. **Prefer
+  build-it framings for should-fire probes**; they cost nothing extra and they audit while they
+  recall.
 - **Config and data surfaces.** An unregistered flag, or a shared dict key whose meaning differs
   between producers, makes two runs look comparable when they are not — and no amount of
   documentation testing sees it.
@@ -125,6 +134,11 @@ in `reference/organize.md`: **recording a settled decision is as valuable as rec
 - ⛔ **Controls in both directions, every run.** An index that flags *everything* as already-tried
   is exactly as broken as one that flags nothing — and it fails invisibly, by suppressing
   legitimate work rather than permitting duplicated work.
+  ⚠️ **Score HOW a control passed, not just that it did. A control that proceeds only after
+  reading past the entry — into the findings file, the source, another doc — is a LATENT
+  over-fire, not a pass.** The entry alone said "closed"; a less thorough agent stops there and
+  silently drops legitimate work. Fix the entry, not the probe: state the distinction the escaping
+  agent had to go and find.
 - ⛔ **Write predictions before results.** A miss then localises one wrong belief. Expect some
   misses to be **yours** — a control that contradicts your prediction because the docs are stale is
   the most valuable result this method produces, and nothing else detects it.

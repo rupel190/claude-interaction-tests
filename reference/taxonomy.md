@@ -92,6 +92,14 @@ the one partial-instruction case a machine can find, so there is no excuse for f
 **The index suppresses legitimate work.** An entry scoped by *topic* instead of by *mechanism*
 catches everything nearby, and an agent declines work that was never closed.
 
+⚠️ **It has a MIDDLE STATE that reads as a pass and is not one: the control proceeds, but only
+after escaping the index** — going to the findings file, the source, or another doc to learn that
+its case is the licensed exception. Observed: an entry closing a metric *as a gate* also named it
+as a trigger, while a separate doc licensed the same metric *as a scored candidate*; the probe
+resolved it correctly only by reading the second doc. **Grade that as a latent over-fire.** The
+next agent stops at the entry, declines, and nothing anywhere records that it happened. The fix is
+one clause in the entry naming the distinction — never a narrower probe.
+
 **⛔ It fails invisibly.** Duplicated work is at least visible when you notice the rebuild;
 suppressed work looks like an agent being appropriately careful.
 
