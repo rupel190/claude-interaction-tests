@@ -129,6 +129,31 @@ that were deliberate and already paid for. A section of *"these are load-bearing
 what makes the rest of it safe to act on — and it is the same instinct as the declined-proposal row
 in `reference/organize.md`: **recording a settled decision is as valuable as recording a defect.**
 
+## If you caught a miss, send it back
+
+⭐ **The best data for this skill is produced by agents who are not running it.** Every ordinary
+session in which an agent proposes something the docs forbid, restates a documented fact wrongly,
+or re-derives a finding that is already written down is this method's phenomenon occurring in the
+wild — and it carries something a designed probe cannot: the agent knows **what it read and what
+it did not**. A probe tells you a row did not fire. A live miss tells you why.
+
+So when it happens to you, in any project, record it. The shape that makes it usable:
+
+```
+what I did wrong          — the claim, or the action taken
+what the docs already say — file and line, quoted
+what I read instead       — and why that seemed sufficient at the time
+```
+
+⛔ **The file-and-line is not optional.** An agent grading its own recall has an obvious incentive
+problem, and a document that can be quoted back against the claim is the only thing that makes the
+report checkable. Without it this collects impressions.
+
+⚠️ **It is not a probe result and must never be counted as one.** Probe discipline — blind, one per
+agent, predictions written first, controls both ways — is what makes those trustworthy, and none of
+it applies here. Treat a reported miss as a **lead for where to point the next probe**, not as a
+measurement.
+
 ## Non-negotiables
 
 - ⛔ **Controls in both directions, every run.** An index that flags *everything* as already-tried
