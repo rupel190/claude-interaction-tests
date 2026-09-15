@@ -236,3 +236,102 @@ when a caching mechanism is exactly what a default channel would have.
 2. State the rule in the non-negotiables: **edit, end the session, then probe.**
 3. Consider whether the method should recommend probing from a *separate* session by
    default, which also removes the author's own priming from the run.
+## The harness already exists — `claude plugin eval`
+
+**Found:** 2026-09-15, surveying the Claude Code plugin directory.
+
+Claude Code ships a test runner for skills, and its experimental design is this method's
+probe protocol with different vocabulary. Plainly: **you write a prompt, you write grader
+files, and it runs that prompt twice over — once with the skill available, once with it
+removed — then reports the difference between the two scores.**
+
+| this method | `claude plugin eval` |
+|---|---|
+| a probe prompt | `prompt.md` (or `case.yaml`) |
+| the scoring sheet | `graders/*.md`, types `regex \| tool_order \| tool_used \| file_exists \| llm \| baseline` |
+| a fresh agent per probe | one clean agent run per case |
+| a should-NOT-fire control | `--ablation with-without` — a second arm with the skill **removed**, scored as a delta |
+| "did it fire", noted apart from "was it right" | graders marked `with-only`, incl. `tool_used: Skill`, **excluded from the score** |
+| one shot | `--runs 3` by default |
+| your judgement | `--threshold 0.8`, exit 1 below it |
+
+Two of those rows are the interesting ones. The **ablation arm** is a control: if a case
+scores the same with the skill and without it, the skill did nothing — the model already
+knew, or the entry never fired. And keeping `tool_used: Skill` **out** of the score is the
+same separation this method insists on, for the same reason: if firing counted toward the
+score, a case could pass by firing and then answering badly, or fail despite a correct
+answer the model already had.
+
+Anthropic's own shipped example is a should-fire / should-not-fire list:
+
+```json
+{"query": "Help me with this USAMO geometry problem",      "should_trigger": true},
+{"query": "Generate 10 practice problems similar to AIME", "should_trigger": false},
+{"query": "What is a good textbook for competition math?", "should_trigger": false}
+```
+
+Those are controls. Law 2 — entries are classes, not instances — is exactly what decides
+whether row 1 fires while rows 2 and 3 stay quiet.
+
+**What it does NOT do.** Its target is a *plugin*. It can measure whether this skill fires;
+it cannot be pointed at a repository and asked whether that repo's `CLAUDE.md` fires, which
+is the thing this method exists to do. And it is an empty harness — no opinion about what to
+probe, no vocabulary rule, no class-vs-instance rule, no failure taxonomy. **It is the runner
+this method lacks; this method is the content it lacks.**
+
+⛔ **It cannot be run here.** `plugin eval` is early access, enabled per organization
+server-side. Every invocation prints `` `plugin eval` is currently in early access `` and
+exits 1 — `--help` still renders, which makes it look available. Not a setting and not a
+NixOS problem: none of the flag-blocking variables (`DISABLE_TELEMETRY`, `DO_NOT_TRACK`,
+`CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC`, `DISABLE_GROWTHBOOK`) are set on this machine.
+So everything here is unvalidated by construction — which is why it is in this file.
+
+**What to try.**
+1. Write the cases regardless: four should-fire, phrased in vocabulary **not** in this
+   skill's `description:`, and two should-NOT-fire controls. The sharpest control is
+   *"audit this CLAUDE.md for accuracy"* — that is a documentation-authoring request, which
+   is a different skill's job, and this one firing on it would be a latent over-fire.
+2. Run those same cases by hand as subagent probes now. The protocol already exists in
+   `reference/probes.md`; only the runner is missing. ⚠️ Mind the same-session snapshot trap
+   from the entry above — edit, end the session, then probe.
+3. ⭐ Steal the ablation idea for index rows. A **row-blind arm** — the same probe against a
+   copy of the repo with one index row removed — measures whether that row earns its place.
+   The entry above reached this accidentally, when probes found the fact by another route and
+   the pass measured nothing about the row. Deliberate is better than accidental.
+
+**Open:** whether a case's `scaffold_script` (author-supplied bash, run per case) can
+materialise a fixture repo carrying a known `CLAUDE.md`. If it can, the harness stops being
+"a runner for this skill" and becomes "a runner for this method".
+
+## Marketplace positioning: authoring is not verification
+
+**Found:** 2026-09-15, comparing this skill against the official plugin directory.
+
+The nearest thing in the directory is `claude-md-management` (Anthropic, ~312k installs):
+it finds every `CLAUDE.md`, grades it A–F against a rubric, prints a report, and then edits
+the files. **That is authoring. This is verification.** Its method is to read the document
+and judge it; this skill's second paragraph is `⛔ A read-through cannot substitute.` Nothing
+in it measures whether a paragraph is ever *reached*. The two are not substitutes and a user
+can legitimately want both — that framing should survive into any listing text.
+
+⛔ **One concrete conflict, worth warning users about.** That rubric scores *"Conciseness —
+no verbose explanations"* as a quality criterion. Law 1 puts every entry's verdict inline so
+the index is useful when the pull does not happen — which reads, to that rubric, as verbosity.
+Pointed at an index built this way it will propose deleting the verdicts, and it has `Edit`
+in its frontmatter.
+
+**What to try.**
+1. Ship an `evals/` suite with the listing. Of the 54 plugins whose source is readable in the
+   marketplace repo (39 first-party, 15 vendored external), **exactly one carries an `evals/`
+   directory at all** — the remaining ~242 entries live in third-party repos that were not
+   checked, so treat this as directional, not a census. Still: a skill about proving that
+   documentation fires, shipping evidence that it fires, is an argument nothing else is
+   making.
+2. Submission is a form (`clau.de/plugin-directory-submission`), reviewed for quality and
+   security; entries pin your repo at a sha. Locally, `claude plugin validate .` and
+   `claude plugin tag`.
+
+**Open:** the name. `interaction-tests` already needs a disclaimer in the README against
+Storybook's unrelated meaning, and a directory listing gives you no room for a disclaimer —
+the description line does all the work. Worth deciding before submitting rather than after,
+since a rename post-listing costs a `renames:` entry in someone else's manifest.
