@@ -71,6 +71,32 @@ path-pairs in an unfamiliar codebase without simply relying on someone noticing.
 that exists this is a skilled manual technique, not a method, and `SKILL.md` should not
 claim otherwise.
 
+### ⭐ A probe performed it SPONTANEOUSLY, and it paid — plus a candidate enumeration rule
+
+*Observed 2026-09-16, in a seven-probe run nobody had told about this entry.*
+
+A probe asked to build a small measurement script discovered that the **predicate it had to
+implement had three implementations already in the tree**, and that they did not agree. Instead of
+picking one, it computed all three and **printed the disagreement as a control column**. The result
+was a mixed one of exactly the useful kind: two of the three agreed on every case — a null that
+retired a documented worry — while the third diverged on a specific, already-known-and-unresolved
+boundary. The probe then reported the divergence as *expected* rather than as a bug, because it
+could see which of the three it was.
+
+⭐ **This is the first evidence the technique can be REACHED rather than only wielded**, and it
+suggests the enumeration rule this entry says is missing — and it is small enough to state:
+
+> **When you must implement a predicate the codebase already has an opinion about, count the
+> opinions before writing yours.** Grep for the concept, not the function name; if more than one
+> implementation exists, the deliverable is the comparison, not a choice.
+
+⚠️ **It does not generalise to the whole technique, and I will not pretend it does.** This case had
+the easiest possible trigger — the agent *had to write* the thing, so the duplicates were directly
+in its way. The hard cases in the parent entry (a total summed in two layers, a defined-but-never-
+called check) have no such forcing move, and nothing here says how to find those. What it does
+establish is that **a build-it probe is a delivery vehicle for differential testing**, which makes
+the two techniques cheaper together than separately — the probe was already running.
+
 ---
 
 ## Harvest the misses from ordinary work — and tell the caller you want them
@@ -159,6 +185,49 @@ method which updates itself from every run drifts toward whatever the most recen
 to need — the same overfitting the skill warns about for probes. A graduation bar is probably
 "observed in two runs on unrelated codebases", not "observed once".
 
+### ⚖️ First execution — what it did and did not establish
+
+*Written by the fresh reader, not the runner, on the seven-probe run that raised this entry.*
+
+**Claim 4 — knowledge the probe INVENTS — is SUPPORTED and has graduated** to `SKILL.md`
+§ *Knowledge the probe INVENTS*. Four instances in one run, not one, and the shape turned out
+**narrower and more useful than this entry claimed**: the probes did not have outside insight, they
+took a rule the docs already state and **extended it one step to a case the docs never applied it
+to**. That narrowness is what makes it safe to act on and tells you where it belongs — back in the
+entry it extends, as a widened scope. ⭐ An unexpected corollary: this is the **one** yield that did
+*not* correlate with build-it framing. The single write-it-up probe surfaced zero artefact defects
+and produced the run's cleanest invention.
+
+**Claim 2 — which probe FRAMINGS worked — is SUPPORTED and has graduated**, as a measured
+observation rather than an assertion: five of five build-it framings surfaced documentation defects
+incidentally, the one write-it-up framing surfaced none.
+
+**Claim 1 — predictions against outcomes — is SUPPORTED, with a twist the entry did not anticipate.**
+The predictor's most consequential error was **not about their own docs at all. It was about the
+HARNESS** — the reachable-channels table, written from assumption, declaring a channel unreachable
+that was in fact loaded into every probe. That excused a real miss as untestable. Two runs have now
+got that same row wrong, in opposite directions, which is a two-observation bar met; the rule and
+the per-tier framing are now in `SKILL.md`'s checklist.
+
+**Claim 3 — a seventh failure mode — got NOTHING either way.** No observed failure resisted the six.
+What the run produced instead was a *refinement* of an existing one (over-firing appears on
+should-fire probes, with a "broad class, narrow verdict" mechanism), which is the healthier outcome
+and is now in `reference/taxonomy.md`.
+
+⛔ **The MOVE itself — "dispatch a fresh agent afterwards" — remains UNVALIDATED, and I cannot
+validate it, because I am it.** A single agent reporting that its own commission was worthwhile is
+the incentive problem this file warns about two entries down. What can be said from the outside:
+the runner's scorecard and the transcripts **disagreed in three places**, all in the direction of
+the runner being harder on their docs than the evidence warranted, and none of the three was
+recoverable from the runner's narrative. Whether that is worth a standing sixth move, or whether it
+was a one-off property of a run whose predictor was unusually invested, needs a **second run on an
+unrelated codebase** — the bar this entry itself set. Do not promote it on this one.
+
+⚠️ **And one cost is now measured rather than guessed:** folding a run back in produced edits to
+five method files from a single run. That is exactly the drift rate this entry worried about. If it
+does become a standing move, it needs a discipline the harvest section already has — **a validated
+tier and an unvalidated tier** — or the method acquires a new claim every time anyone uses it.
+
 ## A candidate seventh failure mode: ambiguity that propagates
 
 Same session, and it is not cleanly any of the six. A load-bearing sentence in a findings
@@ -176,6 +245,15 @@ instruction is *incomplete* and you cannot see what is missing; this is *complet
 you cannot see which of two things it says. And it has a signature the others lack —
 **the error appears one or two hops away from the file that caused it**, in a document
 that merely quoted it.
+
+⚠️ **Still at one instance after a second run — and the absence is worth recording.** A
+seven-probe run in 2026-09 produced no second case: every failure it found sat cleanly inside the
+six, and the only structural result was a *refinement* of over-firing rather than a new class. That
+is weak evidence **against** promotion, not neutral — a mode that does not recur across two rounds
+on an actively-churning repo is a candidate for being an instance of something else. ⬜ Leave it
+here; do not move it to `reference/taxonomy.md` on the strength of a single sighting, and if a
+third round also produces nothing, close it as a variant of partial instruction rather than letting
+it sit open indefinitely.
 
 ⛔ **The boundary.** One instance. It may just be partial instruction wearing a different
 coat, and calling it a mode on n=1 would be exactly the over-naming this skill warns
@@ -260,6 +338,24 @@ memory, and got **both wrong in the permissive direction** (both turned out reac
 The channel I missed was the ordinary one: the file under test. The failure has a shape
 worth naming — *the exotic boundaries get checked and the default one gets assumed*,
 when a caching mechanism is exactly what a default channel would have.
+
+⛔⛔ **HAPPENED AGAIN, 2026-09-16, on the SAME row and in the OPPOSITE direction — so the lesson is
+not "be less permissive", it is "stop writing this table from assumption".** That run's table
+declared the out-of-tree memory channel **unreachable**, and then drew a consequence from it: that
+anything living only there was *untestable by this method* and a miss on it *must not be scored*.
+Both halves were wrong — the channel's **index file was loaded into every probe**, and probes cited
+entries from it by name without ever opening a file. A real miss was pre-emptively excused.
+
+⭐ **Two runs, opposite errors, one row: that is a met bar, and the rule has graduated** to
+`SKILL.md`'s checklist — *measure it with one throwaway probe; do not reason about where files
+live*.
+
+⭐⭐ **The deeper correction, which is what makes the row keep failing: a LOCATION IS NOT A CHANNEL.**
+At that location an *index* file was loaded while the detail files it points at were only pulled —
+so "reachable" and "unreachable" were **both** wrong answers, and any single-column table forces
+you to pick one of them. Record reachability **per tier**, exactly as this method already splits an
+index from its findings files. The harness has the same two-tier shape as the thing being tested,
+and nobody had noticed.
 
 **Consequences for a run.**
 - A round cannot validate index edits made in the session that ran it. Re-running from

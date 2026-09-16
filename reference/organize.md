@@ -182,6 +182,28 @@ large context window it usually is — then over-cutting is the failure mode. An
 past the point where it fires costs you exactly the rebuild you were preventing. Keep recall
 generous; cut evidence hard.
 
+### ⚠️ The findings file CONCENTRATES the drift it was meant to fix
+
+Moving every measurement about one topic into one file does not make those measurements agree. It
+puts numbers from different sessions, different corpora and different populations **next to each
+other**, where the inconsistency stops being invisible and becomes load-bearing — the file is now
+the authority everyone quotes.
+
+*Real instance, and it is the fastest drift this method has recorded:* a findings file written to
+hold one topic's numbers stated the **same quantity two different ways in two of its own sections**
+— both figures correct, each over a different population. A probe reading it **half an hour after
+it was committed** caught the mismatch and warned its reader to state the population with the
+number. Nobody had edited it wrongly; the sections were simply assembled from different sessions.
+
+⛔ **A cross-file guard cannot see this — it is INTRA-file.** The guard patterns compare a number in
+the index against the code, or against another doc; two sections of one findings file disagreeing
+pass every one of them.
+
+✅ **The prevention is a required field, not a test: every number in a findings file names its
+POPULATION in the same sentence** — which set, which corpus, which run, how many. Two honest
+measurements of "the same" quantity disagree until you say what each was over, and the findings
+file is the first place they sit close enough together for anyone to notice.
+
 ## ⛔ Extraction ORPHANS locations — check before and after
 
 **When you move a section out of the always-loaded file, every *location* it mentioned leaves with

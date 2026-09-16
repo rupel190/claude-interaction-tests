@@ -100,6 +100,30 @@ resolved it correctly only by reading the second doc. **Grade that as a latent o
 next agent stops at the entry, declines, and nothing anywhere records that it happened. The fix is
 one clause in the entry naming the distinction — never a narrower probe.
 
+✅ **That fix is now VERIFIED, not merely prescribed.** The entry above gained one clause naming the
+licensed exception. Re-probed a round later, with different wording, a fresh agent proceeded and
+**quoted the clause out of the index** without opening the second doc at all. One entry, measured
+before and after — the only claim in this taxonomy carrying that grade.
+
+⭐⭐ **It also appears on SHOULD-FIRE probes, which is where nobody looks.** Over-firing is written
+everywhere as *"a control declines legitimate work"*, so it gets hunted only at the controls.
+Observed twice in one run, both times on ordinary should-fire probes, both times on an entry
+**adjacent** to the one under test — an agent doing legitimate work spending a paragraph arguing
+that a neighbouring closed entry did not cover its case.
+
+⚠️ **The mechanism is specific and worth recognising in your own entries: a BROAD class carrying a
+NARROW verdict.** One entry read *"any attempt to recover structure from raw low-level records"* —
+correct as a class — while the thing actually refuted was a single *premise* inside it (that those
+records group the way the objects do). Every legitimate consumer of those records matches the
+class; none is touched by the verdict. ⛔ **And the trigger list made it worse** — it named a symbol
+any legitimate consumer must call, so the entry fired hardest on exactly the work it did not close.
+
+✅ **The tell is textual and free: the agent writes a paragraph justifying why a closed entry does
+not apply to it.** Grep every transcript for it, controls and should-fire probes alike. Each hit is
+an over-fire a thorough agent absorbed and a less thorough one would have obeyed.
+**Fix:** make the verdict as narrow as the thing actually refuted, and audit the trigger list for
+symbols a legitimate consumer must also use.
+
 **⛔ It fails invisibly.** Duplicated work is at least visible when you notice the rebuild;
 suppressed work looks like an agent being appropriately careful.
 
@@ -147,6 +171,9 @@ probe fired, cited the entry            ✅ working
 probe fired, cited findings file        ✅ working, pull succeeded
 probe did not fire on closed work       → entry too narrow. Lead with the CLASS
 control fired on open work              → OVER-FIRING. Re-scope by mechanism
+ANY probe argued its way past an entry  → LATENT OVER-FIRE on THAT entry (not the one
+                                          under test). Narrow the verdict to what was
+                                          actually refuted; audit its trigger list
 cited a different file as authority     → STALENESS. Correct in place
 cited a docstring you never indexed     → UNREACHABLE. Extend the map
 "general reasoning only"                → never reached. Location problem

@@ -7,6 +7,28 @@
 ⛔ **Never give one agent several probes.** After the first *"that was already tried"* it is
 primed, and every later answer is contaminated. One probe, one agent, always.
 
+### ⚠️ "One agent" is not what you get — a probe that DELEGATES multiplies the index
+
+A capable agent given a research-shaped task spawns its own helpers, and **every one of them
+inherits the same always-loaded index.** One probe is then not one exposure to the index but
+several, which damages the measurement in three ways:
+
+- **Recall is inflated.** The entry gets *N* independent chances to fire, and the probe only has to
+  notice one of them.
+- **Attribution is destroyed.** In an observed run, a probe's index fire is visible in the
+  top-level transcript only as *"the research agent found a dedicated entry for exactly this"* —
+  the fire happened one level down and arrives as a research result. You can no longer tell
+  *"the probe recalled"* from *"the probe delegated and the delegate recalled"*, and those are
+  different findings: the first says the index reaches a working agent, the second says it reaches
+  an agent whose whole job is to look.
+- **A control's over-fire risk rises** for the same reason, in the direction that makes a control
+  look worse than the structure is.
+
+✅ **Two fixes, and you want the first.** Forbid delegation in the probe prompt — one line, and it
+is consistent with rule 4's read-only-and-cheap framing. If you allow it, **score the whole agent
+tree, not the top-level transcript**, and grade a fire in a delegate one notch below a fire in the
+probe itself.
+
 ## The five design rules
 
 1. **Blind.** Never mention the docs, the index, or that this is a test. The probe is a task. An
@@ -157,11 +179,45 @@ should-fire probes caught          → recall
 should-not-fire controls held      → precision
 predictions correct                → your model of the docs
 defects surfaced incidentally      → the real yield
+entries ARGUED PAST, on any probe  → latent over-firing the controls could not see
 ```
 
 ⭐ **The fourth number is usually the largest.** Probes find contradictions between files as a side
 effect of answering an unrelated question — two probes asking about different topics converging on
 the same stale section is a strong signal, and it is how the method pays for itself.
+
+⭐⭐ **The fifth is free and nobody collects it.** Grep every transcript — controls *and*
+should-fire probes — for the agent explaining **why a closed entry does not apply to its case**.
+Each one is an over-fire that a thorough agent absorbed, and it is the only way to see over-firing
+in places you did not think to put a control. In one run both instances landed on entries
+*adjacent* to the probe's own subject, which is precisely where no control was sited.
+
+⚠️ **A perfect scorecard is not a null run, and it is the result most likely to be misread as
+one.** A run scoring full recall and full precision on a mature index still yielded roughly ten
+documentation defects from the fourth and fifth counts. When the first two numbers saturate, the
+index is working and **the yield has moved** — not disappeared. Report the last three, or the run
+reads as "nothing to fix".
+
+### Scoring a CONFOUNDED probe — void the half that is confounded, not the probe
+
+A probe can be spoiled by the state of the tree it ran against: the thing it might have rebuilt
+already existed, the artefact it would have measured had just been written, the task it was asked
+to plan was half-done. The instinct is to throw the probe out. ⛔ **That discards a measurement you
+still have,** because a probe carries two separable observables:
+
+| observable | confounded by tree state? |
+|---|---|
+| **did the entry fire** — what the agent cited, and in what order | ⛔ **no.** Still fully attributable |
+| **did the agent do the right thing** | ✅ yes — pre-existing work can supply the right answer for free |
+
+*Real instance:* a probe that should have rebuilt something already documented instead found a
+working implementation in the tree — built hours earlier — and correctly reused it. The outcome was
+void. But the citation trail was not: the agent reached the right answer **entirely by code
+search**, never citing the index, which is the *unreachable* mode observed cleanly. Voiding the
+whole probe would have thrown that away and left the run one measurement short.
+
+✅ **So record the two separately, always** — the citation trail is cheap to keep and it is the
+half that survives almost every confound.
 
 ### Not every miss costs the same — score the SHAPE of the failure
 

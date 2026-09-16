@@ -71,9 +71,15 @@ symbol, never by value.
 [ ] Write the maintenance rule at the point of use
 [ ] Copy assets/test_docs_index.py, adjust, MUTATION-TEST it
 [ ] Write predictions + confidence, before running anything
-[ ] Write down WHICH CHANNELS THE HARNESS CAN REACH, before running anything — subagent probes
-    typically inherit project-level docs but NOT user-level memory, so a memory-borne entry is
-    untestable this way. Unstated, a miss gets misattributed to the docs after the fact
+[ ] MEASURE WHICH CHANNELS THE HARNESS REACHES, before running anything — and ⛔ do not write
+    that table from assumption. Two runs have now got the same row wrong from assumption, in
+    OPPOSITE directions (once permissive, once restrictive). One throwaway probe asking the agent
+    to report what it was handed settles it in a minute. Unstated or wrong, a miss is
+    misattributed to the docs after the fact, and a real miss is excused as untestable
+[ ] ⚠️ Record that table PER TIER, never per location. A location is not one channel: an INDEX
+    file there may be loaded into every probe while the detail files it points at are only
+    pulled. For such a location "reachable" and "unreachable" are both wrong answers — it is the
+    same index-over-findings split this method prescribes, now applying to the harness itself
 [ ] Run probes: one per fresh agent, blind, read-only, vocabulary NOT in the entry
 [ ] Include should-NOT-fire controls — always
 [ ] If knowledge governs this repo from OUTSIDE it (vault, tickets, meetings):
@@ -117,6 +123,17 @@ static audit is strong at all three — run both, they are complementary rather 
   contaminated numbers and mis-stated corpora as a side effect of trying to do the work. **Prefer
   build-it framings for should-fire probes**; they cost nothing extra and they audit while they
   recall.
+  ✅ **Measured once, and the split was total.** In a seven-probe run, **all five** build-it /
+  plan-it framings surfaced documentation defects incidentally — a planning doc's claim falsified
+  by one environment default, a predicate carrying **three** disagreeing definitions across the
+  tree, a refuted figure standing as fact in a live docstring, one session's result recorded three
+  different ways in one file, and a documented precondition that did not exist. The **one**
+  write-it-up framing recalled perfectly and surfaced **none**. ⚠️ One run, so the direction is
+  established and the rate is not.
+  ⭐ **But the two framings yield different KINDS, and only build-it is about the artefacts.** The
+  write-up probe produced the run's cleanest piece of *invented* reasoning — it took a documented
+  rule one step further than the documentation had — while the build-it probes produced defects in
+  things on disk. See *Knowledge the probe invents*, below.
 - **Config and data surfaces.** An unregistered flag, or a shared dict key whose meaning differs
   between producers, makes two runs look comparable when they are not — and no amount of
   documentation testing sees it.
@@ -154,6 +171,29 @@ agent, predictions written first, controls both ways — is what makes those tru
 it applies here. Treat a reported miss as a **lead for where to point the next probe**, not as a
 measurement.
 
+## Knowledge the probe INVENTS — capture it, or it dies with the run
+
+⭐ **A probe is scored as a recall test, and it is also a fresh reader of the material.** A fresh
+reader occasionally sees further than the author, and nothing in a scorecard has a column for that,
+so it survives only if someone notices. Observed three times in one run, across **both** framings.
+
+**What it actually looks like, and the shape is narrower than "insight":** the probe takes a rule
+the docs already state and **extends it one step to a case the docs never applied it to.** One
+recalled a documented noise floor correctly, then argued that a *second* correlated case agreeing
+made the result **less** credible rather than more — because both were named in the noise record, so
+agreement is what the noise looks like. The docs contain every premise and not the conclusion.
+Another turned *"instrument the function, do not re-implement it"* into *"this predicate has three
+implementations in the tree, so compute all three and print the disagreement as a control column"*.
+
+⭐ **That narrowness is what makes it trustworthy and tells you where to file it.** It is not an
+outside idea needing its own evidence; it is the scope of an existing entry, discovered by someone
+applying it. So it belongs back in **that entry**, as a widened scope or an added consequence —
+not as a new row, and not in a session summary nobody reads.
+
+⚠️ **Do not confuse it with a probe being right about the codebase.** The test is whether the
+claim is *absent from the docs and derivable from them*. A probe that merely reports what a file
+says has recalled, not invented.
+
 ## Non-negotiables
 
 - ⛔ **Controls in both directions, every run.** An index that flags *everything* as already-tried
@@ -164,6 +204,16 @@ measurement.
   over-fire, not a pass.** The entry alone said "closed"; a less thorough agent stops there and
   silently drops legitimate work. Fix the entry, not the probe: state the distinction the escaping
   agent had to go and find.
+  ⭐⭐ **And score EVERY probe for it, not only the controls — a latent over-fire shows up just as
+  readily on a should-fire probe, where nobody is looking for it.** The tell is textual and costs
+  nothing to grep: **the agent writes a paragraph explaining why a closed entry does not apply to
+  it.** That paragraph is an over-fire that a thorough agent absorbed. Observed twice in one run,
+  both times on should-fire probes, both times on an entry *adjacent* to the one under test — so
+  neither was anywhere a control had been sited, and no control could have been sited everywhere.
+  ✅ **The prescribed fix is now verified, not merely prescribed.** An entry that had blocked a
+  probe in an earlier run gained one clause naming the licensed exception; re-probed with fresh
+  wording, the new agent proceeded and **quoted that clause from the index** without opening
+  anything else. One entry, before and after — the strongest single confirmation this method has.
 - ⛔ **Write predictions before results.** A miss then localises one wrong belief. Expect some
   misses to be **yours** — a control that contradicts your prediction because the docs are stale is
   the most valuable result this method produces, and nothing else detects it.
