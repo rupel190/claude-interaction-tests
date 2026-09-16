@@ -115,6 +115,50 @@ shape: ask a question whose answer lives in a file the agent has **no reason to 
 Probes that ask about the obvious file test routing; probes that ask about the unexpected
 file test whether the index is doing any work at all.
 
+## Close the loop on the RUN, not just on the misses — and say so in the skill
+
+*Raised 2026-09-16 by the caller of a run, mid-run: "feel free to set out an agent afterwards to
+improve the skill based on the outcome too. That's a thing the skill should announce itself."*
+
+The skill already asks for misses harvested from **ordinary** work (above). It says nothing about
+the much richer artefact a **run** produces and then throws away.
+
+A run generates four things the skill cannot get anywhere else, and all four are gone the moment
+the session ends:
+
+1. **Predictions against outcomes.** Written first, by discipline. Where the predictor was wrong
+   about their own docs is the single most informative row in the table, and it is never about the
+   codebase — it is about which entry SHAPES fire and which do not.
+2. **Which probe FRAMINGS worked.** `SKILL.md` already claims build-it beats is-this-allowed. A run
+   either supports that or does not, per probe, for free.
+3. **Failure modes observed against the six named.** A run that keeps producing something that is
+   not cleanly any of them is the evidence for a seventh.
+4. ⭐ **Knowledge the probe INVENTED.** Observed in the run that raised this: a probe recalled a
+   documented noise floor correctly and then added an argument the documentation did not contain —
+   that a *second* correlated case agreeing made the result LESS credible rather than more, because
+   both were named in the noise record. **A probe is scored as a recall test; it is also a fresh
+   reader of the material, and a fresh reader occasionally sees further than the author.** Nothing
+   in the method currently has a place to put that, so it survives only if someone notices.
+
+**The move.** Two halves.
+
+- **Add a sixth move to the five**, or a closing step: *after scoring, dispatch a fresh agent to
+  fold the run's outcome back into `SKILL.md` / `reference/` / `IDEAS.md`.* One paragraph in the
+  index, the same way the harvest section works.
+- ⚠️ **It must be a FRESH agent, not the one that ran the probes.** The runner wrote the
+  predictions and is invested in them; it is the worst possible reader of its own scorecard. The
+  improver should get the results table and the probe transcripts, and not the runner's narrative.
+
+⚠️ **And it must distinguish two outputs that a run mixes together**: fixes to the *docs under
+test* (which belong to the project) and fixes to the *method* (which belong here). A run naturally
+produces far more of the former, and the latter is what evaporates, because it looks like a
+digression from the task that was actually commissioned.
+
+⛔ **Not validated.** Nothing here has been through a run of its own. The obvious risk is that a
+method which updates itself from every run drifts toward whatever the most recent codebase happened
+to need — the same overfitting the skill warns about for probes. A graduation bar is probably
+"observed in two runs on unrelated codebases", not "observed once".
+
 ## A candidate seventh failure mode: ambiguity that propagates
 
 Same session, and it is not cleanly any of the six. A load-bearing sentence in a findings
