@@ -475,3 +475,48 @@ in its frontmatter.
 Storybook's unrelated meaning, and a directory listing gives you no room for a disclaimer —
 the description line does all the work. Worth deciding before submitting rather than after,
 since a rename post-listing costs a `renames:` entry in someone else's manifest.
+
+---
+
+## A defined-but-unread constant is a note from someone who already tried
+
+*Raised 2026-09-18, from a run where a named constant with no call site turned out to carry a
+diagnosis in its birth commit. ⚠️ Generalised — see the anonymity rule at the top.*
+
+A codebase audit found a module-level constant, documented with a clear comment stating the
+threshold it represented, and **referenced nowhere**. The obvious readings are both wrong and both
+common: *dead code, delete it*, or *an oversight, wire it up*.
+
+`git log -S '<NAME>'` gave the real story in one command. The constant was **born in the commit
+that reverted its own consumer** — a gate that had been tried twice and rolled back, whose message
+recorded exactly why it failed: the quantity was being asked of the wrong *granularity*. The author
+kept the number and dropped the mechanism. Re-read at the granularity the revert message pointed
+at, the same constant worked, and the change needed **no new constant at all**.
+
+⭐ **The value was never the number; it was the diagnosis attached to it.** Someone had already
+established that the quantity mattered and that one way of applying it does not work. That is
+precisely the class of fact this skill exists to make recallable — and it was recallable, in the
+one place nobody looks, because a constant's provenance is not a place anyone thinks to pull.
+
+**Why it belongs here rather than in a style guide.** The skill's index-over-findings model assumes
+the durable facts live in files an agent can be pointed at. This one lived in **commit messages**,
+which no index covers, no `CLAUDE.md` links, and no probe currently targets. If a meaningful share
+of "why did we stop doing X" answers are only in history, then history is an un-indexed tier of the
+same evidence base, and an agent that never runs `git log -S` cannot reach it.
+
+**What to try.**
+1. **A probe for the history tier.** Give a fresh agent a task whose correct answer is recorded
+   only in a revert commit message, and see whether it ever consults history. Prediction, written
+   first: it will not — agents read files, and reach for `git log` mainly to describe recent work
+   rather than to ask why something stopped.
+2. **A candidate rule for the index**, if the probe fails: *before deleting an unreferenced symbol,
+   or before rebuilding the capability it names, run `git log -S` on it.* Cheap, one command, and
+   its failure mode is a wasted minute.
+3. **A guard**: a check that lists exported/module-level symbols with no reader. ⚠️ Not to fail on
+   them — plenty are legitimately for callers outside the tree — but to make the population visible,
+   since nobody currently knows how large it is.
+
+**Open.** Whether the ⛔ ALREADY TRIED index shape should carry a `git log -S` trigger term at all,
+or whether that pushes a general habit into a project-specific file. And whether "the reason we
+stopped" is systematically under-indexed compared with "what we decided" — this is one instance,
+and one instance is an anecdote.
