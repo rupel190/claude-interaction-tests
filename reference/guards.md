@@ -106,6 +106,17 @@ import the same module. Best applied where a number appears in both a doc and a 
 findings files becoming unreachable, the maintenance rule being deleted.
 **Shape:** see `../assets/test_docs_index.py`.
 
+⚠️ **The measurement guard has one predictable false positive, and it is worth pre-empting in the
+authoring rule rather than loosening the guard.** A "no numbers in an entry" check cannot tell a
+restated *result* from a numeral inside a **trigger phrase** — the symptom words an agent would
+arrive carrying, which are often quoted verbatim and sometimes contain a figure
+(*"the audit says 0.0% so it cannot matter"*, *"paths under 0.3 mm"*). Observed firing three times
+in one session on a single author, every time on a trigger and never on a real restatement.
+
+⭐ **Keep the guard strict and fix the phrasing**: spell triggers without numerals — *"the reach
+audit reports zero"*, *"very thin paths"*. The number belongs to the findings file either way, so
+nothing is lost, and a guard that starts allowing numerals stops catching the thing it exists for.
+
 ### 6. Control rows for tooling that reads docs
 **Catches:** a script that summarises or scores your docs being wrong in a way that looks right.
 **Shape:** a fixture row whose correct output you fix in advance, plus a row that must NOT match.

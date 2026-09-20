@@ -31,7 +31,7 @@ holds the detail. **Pull the reference file when its subject is in play.**
 `reference/planning-rows.md` covers making decisions **citable**, which is what lets a probe say
 *"row C4 closed this"* and lets you find contradictions precisely.
 
-## The three laws
+## The four laws
 
 Everything else follows from these.
 
@@ -62,6 +62,24 @@ nobody has used yet.
 ⛔ A number written in two places is the dominant documentation bug: both copies look
 authoritative and nothing executes a paragraph. A number that lives in **code** is referenced by
 symbol, never by value.
+
+**4. An entry records STATUS, not just verdict — measured ≠ judged ≠ shipped.**
+*Rejected* and *closed* are unambiguous. The dangerous state is the one in between: a lever that
+was **measured** cleanly — reproduces, controls hold, every check green — and never **judged**.
+Such an entry reads like a recommendation and is not one.
+
+```
+✗  "recovers 3.5x the detail, reproduces at HEAD, controls byte-identical"
+✓  "MEASURED only — the GAIN is judged, the COST is not. Do not ship on this row."
+```
+
+⛔ The failure this prevents is specific and expensive: every check passing is **not** the same as
+somebody having looked. A measurement answers *did it do the thing*; a judgement answers *is the
+thing wanted, at its cost*. An index that cannot say which one a row holds will eventually be read
+as licence to ship.
+
+⭐ Where the two-sided question is the point — a gain with a cost — the entry needs **both** sides
+named, or the reader will act on the half that is written down.
 
 ## Quick start
 
@@ -104,6 +122,7 @@ Full tells and fixes in `reference/taxonomy.md`. Named here so you recognise the
 | **Over-firing** | a control declines legitimate work |
 | **Unreachable** | a probe finds the fact somewhere nothing indexes |
 | **Confidence drift** | the source hedges; the doc asserts |
+| **Relay drift** | the doc is right; the BRIEF quoting it promoted evidence to premise |
 
 ⭐ **Partial instruction is the nastiest.** *"Pin the cache"* is **true**, and an agent that obeys
 it believes nondeterminism is handled while a second uncached call still moves. **A missing

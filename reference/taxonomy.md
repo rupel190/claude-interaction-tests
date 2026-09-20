@@ -164,6 +164,42 @@ between files, diff it against its source, not against the previous copy.
 
 ---
 
+## 7. Relay drift
+
+**The docs are correct and the failure is downstream of them.** A finding travels
+*measurement → findings file → the next task's brief*, and by the second hop it reads as settled
+**because it now has a file behind it**. The hedge that lived beside it — `n=7`, *worst cases, not
+corpus-wide*, *one design* — does not survive the transcription, and the claim arrives at the next
+worker as a premise rather than as evidence.
+
+*Real instance:* three times in one session, a figure written correctly into a findings file was
+quoted into a brief as context and turned out to be false when the worker acting on it measured it.
+One was a "known-good control" that was not a control at all; one was a mechanism claim
+(*"every X is a Y by construction"*) that held for the branch it described but for **a sixth** of
+the population it was then asserted over; one was a confidently-localised cause that was neither
+sufficient nor necessary. **Every one was caught only because the brief asked the worker to
+MEASURE rather than to APPLY.**
+
+⚠️ **Distinct from Confidence drift (6), and the difference is the fix.** There, the source hedges
+and the doc asserts — caught by diffing the doc against its source. Here the doc may be *perfectly*
+hedged; the promotion happens when a human or an agent transcribes it into an instruction. No
+amount of index discipline prevents it, because the index is not where it goes wrong.
+
+⛔ **The second hop is the dangerous one.** A finding quoted straight from a run still smells
+provisional. The same finding quoted from a *file* reads as established, and the file is usually
+cited rather than opened.
+
+**Fix:** re-derive or re-measure before promoting. **Prevention — this is the load-bearing half:**
+**a brief carries QUESTIONS, not CONCLUSIONS.** *"X is always true, now build the fix"* bakes the
+error in and the worker has no reason to test it. *"Measure whether X holds, then decide"* surfaces
+it at no extra cost, because the worker was going to run the measurement anyway.
+
+⭐ A useful tell when reviewing your own brief: **every factual claim in it should either be
+something the worker will verify, or something you are explicitly telling them not to spend time
+on.** A claim that is neither is a relay waiting to fail.
+
+---
+
 ## Diagnosing from a result
 
 ```
