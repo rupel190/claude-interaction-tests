@@ -734,3 +734,17 @@ They had no entry, and nothing said that coverage started later. So an agent rea
 cannot tell "nothing was decided" from "nothing was carried over". ⬜ A candidate for the scaffold:
 a `coverage from: YYYY-MM-DD` line beside `last synced`, or a backfill, at creation, of the decisions
 still in force. Observed once.
+
+## A planted decoy can land on a REAL defect — observed once (2026-09)
+
+*From a human-in-the-loop defect-confirmation loop, not a probe run, but the control has the same shape.*
+A confirm sitting hid one fake marker (a decoy) among a model's proposals to catch rubber-stamping.
+The judge RELABELLED it with a specific reason, and the scorer voided the whole sitting as
+rubber-stamped. Shown the spot in context, the judge confirmed the defect was real: the decoy had
+been dropped at a random point "on thread" on a design whose entire outline carried the defect.
+⭐ The control assumed a clean background that did not exist, which is the should-not-fire-control
+failure (a control is only a control if what it proposes is genuinely open, or here genuinely clean),
+moved from docs to data. Candidate rules: place a decoy only where no proposal and no past human
+marker has ever landed, in a flat interior rather than on the features complaints concentrate on;
+treat a relabel-with-a-reason on the decoy as "check the spot", never as proof of inattention; and
+void the decoy, not the sitting, when the spot turns out to be real. ⬜ One observation — IDEAS only.
