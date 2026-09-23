@@ -74,6 +74,20 @@ after two rounds **over-firing was still untested**, because no valid negative h
 obvious synonyms, and check the plan file says the work is open. If anything comes back, the
 control is invalid; pick another.
 
+⚠️ **What that check does not see (observed once, with the check followed as written).** A control
+validated by grepping the code and the plan came back "already refuted", and the probe was right.
+The lever had been built on a side branch, judged, lost, and merged back **only as a later section
+of a findings file**. There was no code on the main branch and no plan row, and the index row still
+marked the work ⬜ untried. Two additions:
+
+- **Search where verdicts land, not only where code lands.** Read the findings files in full,
+  including sections added after the entry was written. Search history on every ref:
+  `git log --all --grep=` for verdict commits, `-S` for a symbol that never merged.
+- ⛔ **Never take a control's openness from the entry under test.** An index's own *untried* and
+  *unbuilt* markers are the obvious place to find open adjacent work. They are also STATUS claims,
+  the kind that expire silently (`SKILL.md` law 4). A control validated against the row it probes
+  cannot detect that the row is stale, so confirm openness at the authority the row points to.
+
 ### Weak negatives pass for free — aim at the boundary
 
 ⚠️ Verifying openness is necessary and not sufficient. A control so unrelated that nothing could

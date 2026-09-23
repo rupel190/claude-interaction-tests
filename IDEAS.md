@@ -228,6 +228,49 @@ five method files from a single run. That is exactly the drift rate this entry w
 does become a standing move, it needs a discipline the harvest section already has — **a validated
 tier and an unvalidated tier** — or the method acquires a new claim every time anyone uses it.
 
+### ⚖️ Second execution — same codebase, and the bias pointed the other way
+
+*Written by the fresh reader of a ten-probe round (2026-09-23) on the codebase behind the first
+execution. Method: every probe's final report AND its tool calls, pulled from the raw transcripts,
+checked against the runner's scorecard and against the files and history the claims rest on.*
+
+**The scorecard and the transcripts disagreed in eight places.** The first execution found the
+runner *harder* on their docs than the evidence warranted. This one found the runner **more generous
+to the method devices they had just built, and to what a probe's summary said**:
+
+- A probe that obeyed an instruction and still got it wrong was scored ✅: partial instruction,
+  scored as a pass.
+- That probe's summary asserted what its own body hedged, and the scorecard repeated the summary.
+- Defects credited to the round's new probe family had all been found by the OTHER probes.
+- A new attribution device was credited with a power this bank could not give it.
+- A "sealed" answer bank was called invisible to probes, yet a probe had run the one command that
+  lists it, minutes before the answer landed there.
+- A control whose index row was stale was scored as the row firing.
+- An argued-past paragraph was scored as absent, because its cause was expiry rather than an
+  over-broad entry.
+- A cost comparison lined up token totals for tasks of different lengths, while the transcripts
+  held a clean per-turn number.
+
+Each lands in the entry it bears on: `reference/guards.md` pattern 7, `reference/probes.md` on
+validating controls, `SKILL.md` on framings, and the entries below.
+
+⭐ **Both executions fit this entry's premise, that the runner is the worst reader of their own
+scorecard, but not as "the runner is harsh" or "the runner is lenient".** In both runs the bias
+favoured what the runner had just BUILT: the docs in one run, the probe designs in the other. That
+is a sharper prediction for the next run, and it tells the fresh reader where to look first.
+
+⚠️ **The owner caught one of these before the fresh reader did.** A probe's "this file changed" came
+from a file they had merely opened, which only they could know. The transcript also held two things
+nobody had flagged. One was an unretracted twin: a second date read off the same directory listing.
+The other was evidence against both: the probe's own content checks. So the fresh reader and the
+owner find different things, which argues for having both.
+
+⛔ **Still unvalidated as a standing move, by this entry's own bar.** There have been two runs, on
+one codebase, and the second reader is again the agent being judged. This execution is checkable
+only because every disagreement cites a command or a line in a transcript. ✅ One candidate rule,
+observed once: **score from a report's tool calls and body, never from its summary.** The summary is
+where a probe compresses away its own hedges.
+
 ## A candidate seventh failure mode: ambiguity that propagates
 
 Same session, and it is not cleanly any of the six. A load-bearing sentence in a findings
@@ -254,6 +297,17 @@ on an actively-churning repo is a candidate for being an instance of something e
 here; do not move it to `reference/taxonomy.md` on the strength of a single sighting, and if a
 third round also produces nothing, close it as a variant of partial instruction rather than letting
 it sit open indefinitely.
+
+⚠️ **The third round (2026-09-23) produced a possible second instance, but it does not separate
+the two modes.** This skill's own decisions scaffold told agents that a note *"newer than"* the sync
+date means decisions may be missing. "Newer" has two complete readings: the date the note declares,
+or its file modification time. The project copied the line verbatim. The guard implemented the
+first reading, and an agent following the copied line implemented the second, producing a false
+"the source is ahead". The error surfaced two hops from the file that caused it, which is this
+entry's signature. The fix applied was **disambiguation in place** (define "newer"), which is this
+entry's predicted fix. ⚠️ But the same line also lacked a HOW and a WHEN, which is plain partial
+instruction, and the fix added those clauses too. So it keeps the candidate open without
+establishing it. The case is written up under `reference/guards.md` pattern 7.
 
 ⛔ **The boundary.** One instance. It may just be partial instruction wearing a different
 coat, and calling it a mode on n=1 would be exactly the over-naming this skill warns
@@ -376,6 +430,21 @@ and nobody had noticed.
 2. State the rule in the non-negotiables: **edit, end the session, then probe.**
 3. Consider whether the method should recommend probing from a *separate* session by
    default, which also removes the author's own priming from the run.
+
+⭐⭐ **2026-09-23: items 1 and 2 were both run, and the snapshot covers more than the project file.**
+A channel probe was asked to quote a memory-index line written 48 minutes earlier, and reported it
+ABSENT. A hand-added agent type came back "not found". The owner then restarted the process and
+resumed the SAME conversation, and the next round saw the new files: the new agent type loaded, and
+every probe's first-turn prompt was 58k tokens, against 127k before the edit it was testing. So the
+snapshot boundary is the process start, not the conversation. Two runs have now hit this, the index
+in one and the memory index plus agent definitions in the other, and the rule has graduated to
+`SKILL.md`'s checklist.
+
+⚠️ **The consequence reaches past probing.** A correction made to the index mid-session does not
+reach any subagent dispatched later in that session. A dispatcher who fixes the doc and then briefs
+an agent has not told the agent. Until a restart, the correction has to travel IN THE BRIEF. This is
+relay drift (`reference/taxonomy.md` §7), caused by the harness rather than by a person.
+
 ## The harness already exists — `claude plugin eval`
 
 **Found:** 2026-09-15, surveying the Claude Code plugin directory.
@@ -520,3 +589,148 @@ same evidence base, and an agent that never runs `git log -S` cannot reach it.
 or whether that pushes a general habit into a project-specific file. And whether "the reason we
 stopped" is systematically under-indexed compared with "what we decided" — this is one instance,
 and one instance is an anecdote.
+
+---
+
+## Expired STATUS markers: the defect class pre-registration cannot see
+
+*Raised 2026-09-23 by the fresh reader of a round built around EXPIRY: probes aimed at facts whose
+answer had recently changed, with every stale copy found and registered before the run.*
+
+**What happened.** The six expiry probes all acted on the current copy of their fact, and the one
+pre-registered stale copy a probe could reach was noticed unprompted. The round still found three
+expired statements nobody had registered, and **none came from the expiry probes.** Two came from
+the should-not-fire controls and one from a reachability probe. All three were the same kind of
+statement:
+
+| the marker said | what had happened |
+|---|---|
+| an index row: *"the reverse direction is ⬜ untried"* | tried on a side branch, judged and lost three days earlier; only a later section of a findings file recorded it |
+| a plan row: *"built and gated off, nothing judged"* | judged and made the default five days earlier; the findings file says so, the row does not |
+| a plan row: *"held until a dependency lands"* | the dependency landed; nobody went back to the hold |
+
+(The runner counted a fourth, from the cross-boundary probe. Half of it was a false positive, and
+the other half was a coverage gap rather than an expiry. See *An inbound relay starts on the day it
+was created*, below.)
+
+⭐ **These are STATUS claims (`SKILL.md` law 4), not facts:** what is untried, unjudged or on hold.
+That explains why pre-registration missed them. **Pre-registration works by grepping for the OLD
+answer, and an expired "open" marker has no old answer to grep for.** No string in the tree
+contradicts it. The contradiction is that work happened somewhere else and never came back to the
+marker.
+
+**Why the controls found them.** A should-not-fire control is chosen from work the index says is
+OPEN, so controls are, by construction, probes of status markers. An invalid control is then not bad
+luck. It is how the method detects an expired open marker. `reference/probes.md` § *Validate the
+control* now carries this scope boundary.
+
+**What to try.**
+1. **A status sweep before each round.** List every ⬜, unbuilt, unjudged, held and "last synced"
+   marker in the index and the plan. For each one, search the findings files and the history on all
+   refs for its subject after the marker's date. That is pre-registration aimed at statuses.
+2. **Guard pattern 2 has the same blind spot.** It checks a plan row against the CODE. A lever built
+   on a branch and merged back only as a finding leaves no code, so the check reads "still open".
+   It is open whether a findings-aware variant can be written mechanically.
+3. ⚠️ **The argued-past paragraph has more than one cause.** `reference/taxonomy.md` reads *"a probe
+   argued its way past an entry"* as a latent over-fire, and prescribes narrowing the verdict. In
+   this round the same tell appeared for two other causes. Once it was aimed at a plan hold that had
+   expired: the probe was right, and the fix is to update the status, not narrow it. Seven times it
+   was aimed at an unscoped instruction (next entry). Check which cause applies before choosing a
+   fix.
+
+⛔ **One round, one codebase.** The three share a shape. Whether expired statuses dominate what
+probes find on another codebase is untested.
+
+## An always-loaded INSTRUCTION with no trigger fires everywhere
+
+*Raised 2026-09-23. A cut of an always-loaded index ADDED one line telling agents to perform a
+check themselves.*
+
+An index row has a class, and the class decides when it fires. An **instruction** such as *"a
+subagent must check X and say so"* has no class. Nothing in it says when it applies, so it applies
+always. Observed once: seven of nine probes, none of whose questions depended on X, spent a command
+on it and added a paragraph explaining why it did not affect their answer.
+
+⚠️ **That paragraph is the latent-over-fire tell, but the consequence differs.** Nothing legitimate
+was declined, so it is not over-firing in `reference/taxonomy.md`'s sense. The cost is a command
+and a caveat per agent. The slower cost is that a caveat on every answer teaches the reader to skip
+caveats: the guard that cries wolf (`reference/guards.md` pattern 7), arriving through prose.
+
+**What to try.** Give every always-loaded instruction a trigger clause (*"when your answer depends
+on …"*). Probe it the way a row is probed: one probe that needs it, and one adjacent probe that does
+not. ⬜ The freshness case is written into `reference/guards.md` pattern 7. Whether the general
+class holds for instructions that have nothing to do with freshness is untested.
+
+## Verifying a CUT of the always-loaded index: what an after-only round can and cannot show
+
+*Raised 2026-09-23. An index and its rules files were cut from about 245 KB to 74 KB because every
+agent turn re-sends them. The before-arm was skipped to save its cost, and a within-round control
+was used instead.*
+
+**The price is measurable, and the transcript already holds it.** Each assistant turn records its
+prompt size in its usage fields. The first turn's prompt is the always-loaded context plus the
+task. Before the cut, a probe's first turn was 127k tokens. After it, all ten probes' first turns
+came in at about 58k, within a couple of hundred tokens of each other. The before-probe was a
+different agent type, but that difference is small beside the gap. Compare this first-turn number,
+not total tokens across tasks with different numbers of turns. ⭐ It names a constraint that
+`reference/organize.md` § *Do not over-cut* does not weigh. That paragraph argues that attention,
+not capacity, is the binding limit. With many agents per session, the binding limit can be **cost
+per turn × turns × agents**.
+
+**What the round showed.** Recall held on the cut state: every should-fire probe fired and acted on
+the current copy. Three probes reached their answers through findings files the cut had CREATED, so
+the pointers that replaced the moved text worked. That is "keep recall generous, cut evidence hard"
+holding up through one real cut.
+
+**What it could not show, and why the within-round control did not cover it.** The design was to
+mark each probe's target as MOVED or UNTOUCHED by the change, so that a miss could be attributed
+without a before-arm. ⚠️ In this bank the cut had changed nine of the ten targets. The one untouched
+target had never been in the index at all. There was no untouched arm, so a miss could not have
+been attributed; the round had no misses, so the device was never actually used. A wholesale cut
+touches everything, and the device only works for a partial change. Nor can it see a degradation
+that still passes, such as a probe that now needs an extra pull to reach what it used to read
+inline.
+
+⚠️ **A condensation is not an expiry audit.** The one stale verdict the round found had been carried
+through the cut unchanged. A cut is a good moment to check status markers (*Expired STATUS markers*,
+above), but cutting does not do that by itself.
+
+**What to try.** For a wholesale cut, keep a cheap before-arm: only the probes whose targets move,
+run before the cut. And leave one or two index entries deliberately untouched, so the within-round
+control has an arm to compare against.
+
+## Keep the probe bank where probes cannot reach it (an orphan branch nearly isn't)
+
+*Raised 2026-09-23, from the first round run from a committed probe bank.*
+
+Three earlier rounds kept their probes and predictions in session-temporary directories, so none
+could be re-run or compared. This round kept them in a committed bank: fixed probe text, known
+answers with their authorities, pre-registered stale copies, and one predictions file per round,
+committed before that round ran. The bank lived on an **orphan branch** of the repo under test and
+was never checked out, so a probe searching the tree could not find the answers.
+
+✅ **Re-runnable: shown.** The channel probe ran again word for word. A round's predictions were
+written as explicit changes from an earlier round's, and that is what makes two rounds comparable.
+
+⚠️ **Invisible: only to working-tree search.** `git log --all` lists every ref, orphan branches
+included. One probe, doing ordinary history digging, ran exactly `git log -S <symbol> --all`. It
+missed the bank only because the commit adding that symbol to the bank landed about three minutes
+later. The bank now contains the symbol, so the same probe in the next round will list a bank commit
+among its hits, one `git show` away from the answer key. A different ref namespace does not help,
+because `--all` covers every ref. (Telling the RUNNER to search `--all` when validating controls is
+fine, but probes run it too.)
+
+**What to try.** Keep the bank in a separate repository outside the probes' working directory.
+Failing that, check before each round that no bank commit matches `-S` or `--grep` for the symbols
+the probes will be carrying.
+
+## An inbound relay starts on the day it was created: say so, or silence reads as absence
+
+*Raised 2026-09-23 by a cross-boundary probe.*
+
+The relay for outside decisions (`assets/decisions_scaffold.md`) is written newest-first from the
+day it is set up. The probe found outside meetings from before that day that were still relevant.
+They had no entry, and nothing said that coverage started later. So an agent reading the relay
+cannot tell "nothing was decided" from "nothing was carried over". ⬜ A candidate for the scaffold:
+a `coverage from: YYYY-MM-DD` line beside `last synced`, or a backfill, at creation, of the decisions
+still in force. Observed once.

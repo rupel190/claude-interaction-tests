@@ -34,8 +34,14 @@ or what a source file contains, the repo wins over any note.
 last synced from [SOURCE]: YYYY-MM-DD
 ​```
 
-⚠️ **If anything in the watched folders is newer than that date, decisions may be
-missing.** Say so rather than reasoning past it.
+⚠️ **If a note in the deciding folders is newer than that date, decisions may be
+missing** on [the kinds this file owns: scope, audience, terms]. On those questions,
+say so rather than reasoning past it; on any other question, do not mention it.
+
+⛔ **"Newer" means the date a note DECLARES**: a `YYYY-MM-DD` filename prefix, a
+`date:` field, a "last updated" line. **Never use its file modification time.**
+Notes apps, sync clients and backups rewrite mtime without changing a word. A note
+that declares no date is *undated*: say that, never "changed".
 
 ---
 
@@ -67,6 +73,11 @@ missing.** Say so rather than reasoning past it.
 3. ⭐ **A named boundary and a sync date.** This is the skipped one. *"Decisions come from my
    notes"* cannot be checked; two named folders and a date can — which is what turns the whole
    arrangement from discipline into a guard.
+
+⚠️ **The staleness lines inside the template are the only freshness check a SUBAGENT may get.**
+Hook output did not reach subagents in the one harness where that was measured. So those lines
+carry the guard's rules themselves: which questions, which date, and silence otherwise. Why each
+clause is there: `../reference/guards.md` pattern 7, *The rule binds agents too*.
 
 ## The two-tier watch list
 

@@ -32,6 +32,13 @@ agent making the change *knows*. Blocking a commit over it would be wrong, and r
 later in CI would be useless, because by then the reasoning is already done. It has to arrive
 **before the work starts**.
 
+⚠️ **"The agent" means the MAIN session.** In the one harness where it was measured (2026-09),
+SessionStart output never reached a subagent, so delegated work runs without the warning. The
+usual patch is an index line telling agents to run the check themselves — and that line is the
+guard re-implemented in prose. It needs the guard's rules, or it recreates the failure the guard
+was built to avoid (pattern 7, *The rule binds agents too*). Measure this in your own harness with
+the channel probe (`probes.md`); do not assume it either way.
+
 ⭐⭐ **Install the script ONCE, at user level. The per-repo part is the CONFIG, never the code.**
 
 This is the mistake worth not repeating: both guards here were first written into each repo, one
@@ -150,12 +157,36 @@ reported an outstanding transcription that did not exist, and that was passed on
 task.
 
 ✅ **Key it on what the artefact DECLARES** — a `YYYY-MM-DD` filename prefix, a `date:` field, a
-ticket's closed-at. Those survive a touch. Fall back to mtime only for items carrying neither, and
-know that you are then measuring something weaker.
+"last updated" line, a ticket's closed-at. Those survive a touch. Fall back to mtime only for items
+carrying neither, and **label the fallback in the output** — *"no date declared; this is the file's
+mtime"*. ⛔ The fallback is where the error comes back: in one guard it fired on a note whose
+declared date the parser failed to read, and an unlabelled guess cannot be told apart from a
+declaration. Report an undated item as *undated*, never as *newer*.
 
 ⭐ **The general form, worth carrying to any guard: prefer a signal the source ASSERTS over one the
 filesystem happens to record.** Asserted signals are stable and mean what they say; incidental ones
 drift, and a guard that cries wolf is switched off long before it is fixed.
+
+⭐⭐ **The rule binds AGENTS too.** When the hook cannot reach an agent (above) and the index says
+*"check the sync date yourself and say so when it may be stale"*, that line is this guard written
+in prose. It arrives without the three properties that make the guard safe, and all three failed
+in one round (observed once):
+
+- **No HOW.** The one agent whose question depended on the outside source listed the folder with
+  modification times. It reported a file its owner had merely OPENED as changed, and it dated a
+  second note by its mtime, producing a contradiction nothing else supports. Its own content checks
+  pointed the other way and did not make it into its summary. The round's scorer then passed the
+  summary on as a finding.
+- **No WHEN.** Seven of nine agents whose answers did not depend on the outside source spent a
+  command reading the sync line and added a staleness caveat anyway.
+- **No PASS.** *"Say so when it MAY be stale"* can always be met from the date's age alone. Every
+  caveat said "may" and none carried information: the prose version of a guard that cries wolf.
+
+✅ Write the instruction the way the guard is written. Say *which* questions it covers. Say *which*
+date counts: the one a note declares, with an undated note reported as "unknown". Say nothing when
+neither applies. This is relay drift (`taxonomy.md` §7) with a guard as the source: the scope and
+the method were the hedges, and the transcription dropped both. The skill's own decisions scaffold
+had the same gap until 2026-09-23 (`../assets/decisions_scaffold.md`).
 
 ### 8. Declared boundary ↔ actual index (**the ignore file is intent, not reality**)
 **Catches:** knowledge quietly excluded from version control, and excluded material quietly

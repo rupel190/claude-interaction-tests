@@ -98,6 +98,11 @@ named, or the reader will act on the half that is written down.
     file there may be loaded into every probe while the detail files it points at are only
     pulled. For such a location "reachable" and "unreachable" are both wrong answers — it is the
     same index-over-findings split this method prescribes, now applying to the harness itself
+[ ] ⚠️ And measure WHEN it was loaded. What a subagent receives is a SNAPSHOT from when the
+    parent session last started — seen for the index in one run, for the memory index and
+    hand-added agent definitions in another — so an edit made this session reaches no probe.
+    Edit → restart (resuming the same conversation is enough) → probe, and have the channel
+    probe quote one line you changed since the restart
 [ ] Run probes: one per fresh agent, blind, read-only, vocabulary NOT in the entry
 [ ] Include should-NOT-fire controls — always
 [ ] If knowledge governs this repo from OUTSIDE it (vault, tickets, meetings):
@@ -149,10 +154,17 @@ static audit is strong at all three — run both, they are complementary rather 
   different ways in one file, and a documented precondition that did not exist. The **one**
   write-it-up framing recalled perfectly and surfaced **none**. ⚠️ One run, so the direction is
   established and the rate is not.
-  ⭐ **But the two framings yield different KINDS, and only build-it is about the artefacts.** The
-  write-up probe produced the run's cleanest piece of *invented* reasoning — it took a documented
-  rule one step further than the documentation had — while the build-it probes produced defects in
-  things on disk. See *Knowledge the probe invents*, below.
+  ⚠️ **A second run did not reproduce the clean split, and it points at the real variable.** Five
+  of eight build-it framings surfaced defects; the three that did not were should-fire probes whose
+  entry was right and complete — *it already exists, here it is* — so they stopped at the findings
+  file. And an *"anything wrong with this?"* probe and a write-it-up probe both found defects on
+  disk, because neither answer was in the index and both had to search. **The variable looks like
+  having to open artefacts beyond the pulled entry** (one run). Build-it framing is one way to force
+  that, and a reachability or cross-boundary question is another.
+  ⭐ **In the first run the two framings also yielded different KINDS.** The write-up probe produced
+  the run's cleanest piece of *invented* reasoning — it took a documented rule one step further than
+  the documentation had — while the build-it probes produced defects in things on disk. (In the
+  second run both inventions came from build-it probes.) See *Knowledge the probe invents*, below.
 - **Config and data surfaces.** An unregistered flag, or a shared dict key whose meaning differs
   between producers, makes two runs look comparable when they are not — and no amount of
   documentation testing sees it.
