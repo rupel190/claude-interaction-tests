@@ -88,6 +88,28 @@ marked the work ⬜ untried. Two additions:
   the kind that expire silently (`SKILL.md` law 4). A control validated against the row it probes
   cannot detect that the row is stale, so confirm openness at the authority the row points to.
 
+⚠️ **The same failure outside probing: a planted DECOY that lands on something real** (observed once,
+in a human-judged defect sitting rather than a probe run). One fake marker was hidden among a
+model's proposals to catch a judge who confirms everything. The judge relabelled it with a specific
+reason, and the scorer voided the whole sitting as rubber-stamped. Shown the spot in context, the
+judge was right: the decoy had been dropped at a random point on a design whose entire outline
+carried a real defect. A decoy is a should-not-fire control aimed at a person, and this section's
+rules apply to it unchanged:
+
+- **Validate the spot before the sitting**, as you would a control's openness. At minimum, never
+  place it where a proposal or a past human marker has landed.
+- **Suspect the control first** (below). A relabel *with a reason* on the decoy says "check the
+  spot". It is not evidence of inattention.
+- **Void the decoy, not the sitting.** That is the confounded half, not the whole probe
+  (§ *Scoring a CONFOUNDED probe*).
+
+⭐ **Which negative is strong depends on the failure it has to catch.** An index over-fires at the
+EDGES of a class, so its controls belong at the boundary (next section). A decoy placed where it is
+certainly clean catches a judge who confirms EVERYTHING, and only that judge. A decoy plausible
+enough to catch a partly attentive judge has to sit where real defects occur, which is exactly where
+it is likeliest to be real, so it needs the most checking. The observed failure was a plausible
+decoy that nobody had checked.
+
 ### Weak negatives pass for free — aim at the boundary
 
 ⚠️ Verifying openness is necessary and not sufficient. A control so unrelated that nothing could
@@ -184,6 +206,16 @@ This is the diagnostic. Map the answer to a mode:
 | "general reasoning only" | the structure was never reached | fix location, not wording |
 | the doc, and it is still wrong | **partial instruction** | state the scope boundary |
 
+⭐ **Check the self-report against the tool trail, and score from the trail when they differ.**
+`WHAT INFORMED YOU` is written after the work, and a summary drops the probe's own hedges. The first
+command is often decisive by itself. If it already searches for a symbol or phrase that the task
+did not contain and the loaded index row does, the row fired before any file was opened. If the
+credited fact first appears in a findings section the probe pulled, it arrived by a pull, whatever
+the summary says. Used by the fresh readers of two consecutive rounds on one codebase, and each
+found scorecard claims the trail contradicted: a hedge the summary had dropped, and a "fired from
+the row" that was really a pull.
+⚠️ Two rounds, one codebase. The unrelated-codebase test is still to come.
+
 ## Scoring a run
 
 Count four things, and report them separately:
@@ -269,3 +301,17 @@ buried") rather than from the entry, and by having a second person or a fresh ag
 2. Add anything the probes taught you to the relevant index, with its scope boundary.
 3. **Re-probe the fixed entries** with new wording. A fix verified by the probe that found it is
    not verified.
+   ⚠️ Two checks before you score a re-probe as verifying a fix (each observed once, in one
+   four-probe re-probe round):
+   - **Diff the entry between the two states, and confirm the re-probe's FIRST cite is inside that
+     diff.** Two of the four probes, both labelled as testing a fix, fired from rows the fix had
+     never touched. One row had already been correct at the earlier state. The other probe's
+     corrected content lived in a findings file it reached by a pull. Both were scored as "the fixed
+     row now fires". A re-probe that fires from an unchanged row tells you about that row, not
+     about the fix.
+   - **"New wording" means new against the FIXED entry, not only against the old probe.** A fix
+     that follows the trigger rule copies the failing probe's symptom words into the entry. So
+     wording that is fresh against the old probe can match the new trigger list, as happened here.
+     Read the BEFORE transcript. If the old probe already reached the row, routing was never the
+     failure, and the overlap does not confound a fix to the row's content. If the old miss was a
+     routing miss, rephrase.

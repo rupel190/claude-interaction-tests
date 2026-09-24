@@ -269,7 +269,45 @@ owner find different things, which argues for having both.
 one codebase, and the second reader is again the agent being judged. This execution is checkable
 only because every disagreement cites a command or a line in a transcript. ✅ One candidate rule,
 observed once: **score from a report's tool calls and body, never from its summary.** The summary is
-where a probe compresses away its own hedges.
+where a probe compresses away its own hedges. *(Used again by the third execution below, and
+graduated to `reference/probes.md` § Reading WHAT INFORMED YOU.)*
+
+### ⚖️ Third execution — a re-probe round, and the scorecard measured the fixes it had just made
+
+*Written by the fresh reader of a four-probe round (2026-09-24) that re-probed the entries corrected
+after the second execution's round. Same codebase. Method: tool trails and hand-backs, the index
+diffed between the two tested states, and the bank's commit times.*
+
+**The scorecard and the evidence disagreed in six places:**
+
+- **"All four fixed entries now fire from the index row."** Two did. One was a row whose stale
+  status had been corrected. The other was a row whose expired hold had been updated in the same
+  commit as the plan row it quotes, so the result cannot say which of the two edits removed the
+  argued-past paragraph. The other two probes fired from rows the fix never touched: one row had
+  already been correct at the earlier state, and the other probe's corrected content lives in a
+  findings file it pulled.
+- **A sub-prediction, "does not propose the refuted mechanism", was scored as the refutation
+  firing.** That is an absence. The probe never cited the refutation, though its trail shows it
+  read those lines in a pulled findings file.
+- **A design idea was credited as invented knowledge, though the probe itself marked it "general
+  reasoning only".** It is absent from the docs and NOT derivable from them, which the test in
+  `SKILL.md` excludes. The round's other credited invention does qualify: reuse a centre line the
+  generator already lays as underlay, and drop the satin above it. It follows from two plan rows.
+- **No argued-past count was kept.** One probe wrote the tell paragraph on an adjacent closed row
+  whose trigger list names the functions its fix must modify (now in `reference/taxonomy.md` §4).
+- **The summary line still said the scoped instruction was silent on "3 of 3" probes after the
+  fourth row landed.** It was 4 of 4.
+- **"State under test" named only the snapshot commit.** The tree the probes read had moved two
+  commits past it, and one of those commits corrected an index row on disk (snapshot entry, below).
+
+⭐ **The second execution's prediction held.** The scorecard had a column for the over-fire the
+runner had just fixed and none for new ones, and it credited to the index row what had arrived by
+pulls. The skill's own scoring sheet had no argued-past column either. It has one now
+(`assets/probe_template.md`). ⚠️ One framing data point, and it does not add to the `SKILL.md`
+tally: all four probes were plan-it framings, and only one surfaced a documentation defect on disk.
+Re-probes land in ground that was just cleaned, so a low yield is expected, and a find there means
+the correction pass missed something. ⛔ The move itself is still unvalidated by this entry's own
+bar: three executions, one codebase, and each reader was an agent in the session being judged.
 
 ## A candidate seventh failure mode: ambiguity that propagates
 
@@ -444,6 +482,22 @@ in one and the memory index plus agent definitions in the other, and the rule ha
 reach any subagent dispatched later in that session. A dispatcher who fixes the doc and then briefs
 an agent has not told the agent. Until a restart, the correction has to travel IN THE BRIEF. This is
 relay drift (`reference/taxonomy.md` §7), caused by the harness rather than by a person.
+
+⚠️ **The other face: the TREE keeps moving while the snapshot stays put (2026-09-24).** Between the
+process start that fixed a round's index and the round itself, two commits landed, plus uncommitted
+work in progress. The second commit came 27 minutes before the probes, and it corrected an index row
+ON DISK: a "⬜ unbuilt" status, written before the thing was built. The probes loaded the old row.
+One probe also took its numbers from a run directory it picked by modification time. That directory
+turned out to be one arm of an A/B for work nobody had committed yet. So **the state under test is
+a PAIR**: the snapshot for everything loaded, and the tree at launch for everything pulled,
+uncommitted work included. The round's bank recorded only the first.
+
+The hazard: a probe that finds the on-disk fix reads as staleness in an index that is already
+corrected, and the scorer fixes it a second time. No probe in this round touched the changed row,
+so this is a hazard the state shows, not a failure anyone measured. Record both states, and before
+you score any staleness finding, diff the loaded index against the one on disk. ✅ The relay rule
+above worked in the same session: this round's fresh reader loaded the stale row too, and the
+dispatcher's brief carried the correction.
 
 ## The harness already exists — `claude plugin eval`
 
@@ -641,6 +695,21 @@ control* now carries this scope boundary.
 ⛔ **One round, one codebase.** The three share a shape. Whether expired statuses dominate what
 probes find on another codebase is untested.
 
+**2026-09-24, the re-probe round: one more, found by a SHOULD-FIRE probe, in a source docstring.**
+A plan-it probe opened the gate it would have to change and found that gate's docstring still
+saying "unjudged, nobody has looked at it". The text was written when the gate was built, and the
+gate was judged later that same day. This round pre-registered no stale copies at all. Three
+consequences:
+
+- ⚠️ **Controls are one finder, not the only one.** Any probe that opens the artefact holding the
+  marker can find it, and a plan-it framing opens the code.
+- ⚠️ **Opening is not noticing.** The previous round's control read the same lines and did not
+  report them. Its attention was on the bigger staleness in the index row.
+- ⛔ **The in-place correction after that round fixed the index row and the findings file, and
+  missed this third copy.** A status is written wherever the thing is DEFINED. So the sweep in
+  *What to try* 1 has to cover source docstrings and code comments, not only the index and the
+  plan: search for the SYMBOL, and read the status words beside every hit.
+
 ## An always-loaded INSTRUCTION with no trigger fires everywhere
 
 *Raised 2026-09-23. A cut of an always-loaded index ADDED one line telling agents to perform a
@@ -660,6 +729,22 @@ caveats: the guard that cries wolf (`reference/guards.md` pattern 7), arriving t
 on …"*). Probe it the way a row is probed: one probe that needs it, and one adjacent probe that does
 not. ⬜ The freshness case is written into `reference/guards.md` pattern 7. Whether the general
 class holds for instructions that have nothing to do with freshness is untested.
+
+**After, 2026-09-24: the rewritten line went quiet on unrelated work.** The instruction was
+rewritten per `reference/guards.md` pattern 7: which questions it covers, which date counts, and
+silence otherwise. In the next round, none of four probes whose answers did not depend on it read
+the sync line or added a caveat, against seven of nine before. ⚠️ Three limits keep this here:
+
+1. **Only the negative side was re-probed.** No question that NEEDS the check was in the round, and
+   an instruction that no longer fires anywhere also scores zero. This is half of the paired probe
+   the paragraph above asks for.
+2. **The rewrite added the trigger, the method and the pass clause at once.** So this supports the
+   three together, which is pattern 7's prescription, not the trigger clause on its own.
+3. **One instruction, one codebase, different tasks before and after.** It is one instance measured
+   twice, not two instances.
+
+What would graduate it: the needing probe re-run against the rewritten line, and a second
+instruction, one unrelated to freshness, measured the same way.
 
 ## Verifying a CUT of the always-loaded index: what an after-only round can and cannot show
 
@@ -699,6 +784,15 @@ above), but cutting does not do that by itself.
 run before the cut. And leave one or two index entries deliberately untouched, so the within-round
 control has an arm to compare against.
 
+⚠️ **The first-turn number belongs to the PROCESS, not only to the docs (2026-09-24).** After a later
+restart, every agent type's first turn grew by roughly 8k tokens; probes went from about 58k to
+about 66.5k. Over the same interval the loaded index grew by about 2 KB, and the memory index, the
+rules, the agent definitions and the user-level instructions did not change at all. So most of the
+growth came from the harness: tool schemas, server instructions, skill listings. Compare first-turn
+sizes only within one process lifetime, or diff every loaded channel between the two measurements
+and attribute the difference. The cut's before and after above were measured across a restart, so
+its figure is right in direction and order of magnitude, not to the percent.
+
 ## Keep the probe bank where probes cannot reach it (an orphan branch nearly isn't)
 
 *Raised 2026-09-23, from the first round run from a committed probe bank.*
@@ -724,6 +818,17 @@ fine, but probes run it too.)
 Failing that, check before each round that no bank commit matches `-S` or `--grep` for the symbols
 the probes will be carrying.
 
+**2026-09-24, the next round.** ✅ The bank had moved to its own repository. One probe searched
+history in the repo under test (`git log --grep`) and could not reach it. ⚠️ **A separate
+repository is necessary, not sufficient: probes roam.** In the same round one probe searched a
+sibling repository, legitimately, because the index points there. Another ran a filename search over
+the whole filesystem. The bank sat in the same parent directory as both targets, one content search
+from `..` away. Keep it off the paths a probe has any reason to walk, and never name its location in
+anything always-loaded. ⚠️ **And re-runnable needs every round to bank its probe TEXT.** That round
+committed its predictions but kept the probe texts only in the session's transcripts. The bank holds
+one-line labels, so the round cannot be re-run word for word from the bank, and a transcript is
+exactly the kind of session-temporary store the bank was built to replace.
+
 ## An inbound relay starts on the day it was created: say so, or silence reads as absence
 
 *Raised 2026-09-23 by a cross-boundary probe.*
@@ -735,16 +840,15 @@ cannot tell "nothing was decided" from "nothing was carried over". ⬜ A candida
 a `coverage from: YYYY-MM-DD` line beside `last synced`, or a backfill, at creation, of the decisions
 still in force. Observed once.
 
-## A planted decoy can land on a REAL defect — observed once (2026-09)
+## A planted decoy can land on a REAL defect — filed as an instance (2026-09-24)
 
-*From a human-in-the-loop defect-confirmation loop, not a probe run, but the control has the same shape.*
-A confirm sitting hid one fake marker (a decoy) among a model's proposals to catch rubber-stamping.
-The judge RELABELLED it with a specific reason, and the scorer voided the whole sitting as
-rubber-stamped. Shown the spot in context, the judge confirmed the defect was real: the decoy had
-been dropped at a random point "on thread" on a design whose entire outline carried the defect.
-⭐ The control assumed a clean background that did not exist, which is the should-not-fire-control
-failure (a control is only a control if what it proposes is genuinely open, or here genuinely clean),
-moved from docs to data. Candidate rules: place a decoy only where no proposal and no past human
-marker has ever landed, in a flat interior rather than on the features complaints concentrate on;
-treat a relabel-with-a-reason on the decoy as "check the spot", never as proof of inattention; and
-void the decoy, not the sitting, when the spot turns out to be real. ⬜ One observation — IDEAS only.
+⭐ **Not a new rule.** A decoy is a should-not-fire control aimed at a person, and this case is now
+filed as an instance under `reference/probes.md` § *Validate the control BEFORE the run*. The
+section's three rules cover it unchanged: validate before, suspect the control first, and void the
+confounded half. The one step it added there: a decoy placed where it is certainly clean catches
+only a judge who confirms everything, while a plausible decoy sits where real defects occur and
+needs the most checking.
+
+⬜ **Still open here: whether decoy placement for human sittings needs its own rule beyond that.**
+The candidate is never to place one on the features that complaints concentrate on. Settling it
+needs a second sitting in which a decoy fails.

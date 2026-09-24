@@ -17,9 +17,13 @@ heavy command. Reading files and grepping is fine.
 Reply with exactly these three sections:
 1. RECOMMENDATION: proceed / do not proceed / proceed with changes
 2. WHY: 3-6 sentences
-3. WHAT INFORMED YOU: name the specific file(s) and section/heading you relied on. If nothing
-   in the repo informed you and this is your own reasoning, say "general reasoning only".
+3. WHAT INFORMED YOU: name the specific file(s) and section/heading you relied on, IN THE ORDER
+   you consulted them. If nothing in the repo informed you and this is your own reasoning, say
+   "general reasoning only".
 ```
+
+⭐ The order is what lets you tell *fired from the row* from *arrived through a pull*. Check it
+against the probe's tool calls (`reference/probes.md` § *Reading WHAT INFORMED YOU*).
 
 ## Variant — cross-boundary probe
 
@@ -51,10 +55,14 @@ first. Without it a miss cannot be attributed to the boundary rather than to wea
 
 ## Scoring sheet
 
-| probe | proposal | phrased as | predicted | confidence | actual | read |
-|---|---|---|---|---|---|---|
-| P1 | | not in row | fires | | | |
-| C1 | | genuinely open | does NOT fire | | | |
+| probe | proposal | phrased as | predicted | confidence | actual | first cite | argued past | read |
+|---|---|---|---|---|---|---|---|---|
+| P1 | | not in row | fires | | | | | |
+| C1 | | genuinely open | does NOT fire | | | | | |
+
+⛔ **Fill "argued past" on EVERY probe, controls and should-fire alike**: name the entry, or write
+"none". Leave the column out and the count gets dropped. One run's scorecard had a column only for
+the over-fire its runner had just fixed, and it missed a new one on an adjacent row.
 
 **Reading section 3:**
 
@@ -63,3 +71,7 @@ first. Without it a miss cannot be attributed to the boundary rather than to wea
 * names a *different* file as the authority → **staleness**; the index contradicts it.
 * "general reasoning only" → the index was never reached. Fix location, not wording.
 * follows the doc and is still wrong → **partial instruction**.
+* spends a paragraph on why a closed entry does NOT cover its case → **latent over-fire on THAT
+  entry**, whichever probe it appears on (`reference/taxonomy.md` §4).
+* on a re-probe of a fix: the first cite must be a row the fix CHANGED. Diff the index between the
+  two states (`reference/probes.md` § *After the run*).

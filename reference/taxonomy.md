@@ -42,6 +42,15 @@ rejected. The plan file even flagged the contradiction in its own text, where no
 fact kind (`organize.md`); when you close something, the closing session updates the index in the
 same commit.
 
+✅ **Correcting in place is verified once by re-probe.** A row whose status still read "the reverse
+is untried" sent a probe past it to a later section of a findings file, and the probe declined
+correctly from there. The row was corrected in place, with the verdict widened to both directions.
+A fresh probe the next day, worded differently, declined **from the row** and cited it first. The
+old probe had also cited that row first, so routing was never the problem: the only thing that
+changed between the two runs was what the row said. ⚠️ The same correction pass missed a third copy
+of that status, in the gate's own docstring, and a probe found it there the next day. A status gets
+written wherever the thing is DEFINED, so search for the symbol, not only for the old wording.
+
 ⭐ **Tell to watch for: two probes on unrelated topics both citing the same third file.** That is
 staleness announcing itself.
 
@@ -103,13 +112,16 @@ one clause in the entry naming the distinction — never a narrower probe.
 ✅ **That fix is now VERIFIED, not merely prescribed.** The entry above gained one clause naming the
 licensed exception. Re-probed a round later, with different wording, a fresh agent proceeded and
 **quoted the clause out of the index** without opening the second doc at all. One entry, measured
-before and after — the only claim in this taxonomy carrying that grade.
+before and after. One of only two claims in this taxonomy with that grade; the other is the
+staleness fix (§2).
 
 ⭐⭐ **It also appears on SHOULD-FIRE probes, which is where nobody looks.** Over-firing is written
 everywhere as *"a control declines legitimate work"*, so it gets hunted only at the controls.
 Observed twice in one run, both times on ordinary should-fire probes, both times on an entry
 **adjacent** to the one under test — an agent doing legitimate work spending a paragraph arguing
-that a neighbouring closed entry did not cover its case.
+that a neighbouring closed entry did not cover its case. Seen again in a later run on the same
+codebase, with the same shape, and the runner's scorecard did not record it because it had no
+column for it.
 
 ⚠️ **The mechanism is specific and worth recognising in your own entries: a BROAD class carrying a
 NARROW verdict.** One entry read *"any attempt to recover structure from raw low-level records"* —
@@ -117,6 +129,11 @@ correct as a class — while the thing actually refuted was a single *premise* i
 records group the way the objects do). Every legitimate consumer of those records matches the
 class; none is touched by the verdict. ⛔ **And the trigger list made it worse** — it named a symbol
 any legitimate consumer must call, so the entry fired hardest on exactly the work it did not close.
+Seen a second time, on a different row: an entry closing a SEARCH over where a column should end
+listed, as triggers, the very functions that a fix for a *different* failure of the same code has
+to modify. A probe making that fix wrote the tell paragraph. The distinction it needed ("this is a
+fallback that never searched, not a bad choice among candidates") was in a later findings section,
+not in the row.
 
 ✅ **The tell is textual and free: the agent writes a paragraph justifying why a closed entry does
 not apply to it.** Grep every transcript for it, controls and should-fire probes alike. Each hit is
