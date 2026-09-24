@@ -104,6 +104,7 @@ named, or the reader will act on the half that is written down.
     Edit → restart (resuming the same conversation is enough) → probe, and have the channel
     probe quote one line you changed since the restart
 [ ] Run probes: one per fresh agent, blind, read-only, vocabulary NOT in the entry
+[ ] Extract the run with assets/probe_extract.py — score from the BODY it prints, never a summary
 [ ] Include should-NOT-fire controls — always
 [ ] If knowledge governs this repo from OUTSIDE it (vault, tickets, meetings):
     copy assets/decisions_scaffold.md, name the watched folders and a sync date,
