@@ -29,6 +29,27 @@ is consistent with rule 4's read-only-and-cheap framing. If you allow it, **scor
 tree, not the top-level transcript**, and grade a fire in a delegate one notch below a fire in the
 probe itself.
 
+### ⛔⛔ A probe inherits the PARENT's environment — its working directory AND its scratchpad
+
+A subagent is not dropped into a clean room. It starts in the coordinator's **current working
+directory**, and its environment block advertises the coordinator's **scratchpad directory as its
+own**. Both are channels to material the probe must never see. Both have leaked in observed runs:
+
+- **The cwd.** The coordinator `cd`'d into the sealed answer bank to commit, the `cd` persisted, and
+  every probe dispatched afterwards ran with the bank as its working directory. One was even told
+  the path by the harness when a command timed out.
+- **The scratchpad.** A control probe grepped the whole temp tree for a domain term, landed in the
+  coordinator's scratchpad, read an earlier one-off probe script there, and cited it in its answer.
+  Nothing sealed was in it that time. The channel is open anyway.
+
+✅ **Before dispatching:**
+1. `cd` back to the repo under test in the coordinator's own shell. Use `git -C` / subshells for any
+   commit elsewhere, so no `cd` persists.
+2. Keep nothing round-relevant in the scratchpad: no answer bank, no predictions, no earlier probe
+   outputs on the probes' topics. Or run the round from a fresh session whose scratchpad is empty.
+3. Have the extractor flag any tool input that touches the coordinator's scratchpad or a path
+   outside the repo under test. A read there is a confound to score, not a free fact.
+
 ## The five design rules
 
 1. **Blind.** Never mention the docs, the index, or that this is a test. The probe is a task. An
