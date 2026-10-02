@@ -113,3 +113,22 @@ MIT — see [LICENSE](LICENSE).
 Developed 2026-08 while restructuring the documentation of a production embroidery-digitizing
 pipeline, and validated on it. The failure taxonomy is empirical — every mode in it was found by a
 probe, not derived from theory.
+
+## Related work
+
+This method was developed independently. The work below arrived at neighbouring ideas from other
+directions and is listed for context, not as a source.
+
+- **Self-repairing knowledge loops.** *The Wiki That Fixes Itself*, Dotzlaw Consulting (AI-56):
+  <https://dotzlaw.com/insights/ai-56-organizational-second-brain-self-improvement-loop/>. An
+  expert's correction triggers a diagnose → compile → validate → land loop, with a regression
+  suite that grows by one case per fix. That loop is reactive: it starts from an error someone
+  caught. Interaction tests are the proactive complement: blind probes provoke the miss before a
+  real task reaches it.
+- **Claim-level staleness.** LangChain's OpenWiki binds each claim to the line range and version of
+  its evidence, and marks the claim stale when the evidence changes. Guard pattern 9
+  (`reference/guards.md`) binds a status or default claim to the KEY of the artefact that decides
+  it instead, so it fires when the decision moves, not on every unrelated edit nearby.
+- **Documentation grading.** Anthropic's `claude-md-management` plugin grades `CLAUDE.md` files
+  against a rubric and edits them. That is authoring; this is verification. Note one conflict: its
+  conciseness criterion would delete the inline verdicts that law 1 depends on.

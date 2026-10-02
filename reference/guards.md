@@ -256,15 +256,12 @@ Three requirements make it survivable:
    into stale, historical or false match. Fix the stale ones in place, and tune away the false ones
    until none are left.
 
-⭐ **Bind to the decision, not to the text around it.** Prior art: LangChain's OpenWiki binds every
-claim to the line range of its evidence plus an evidence version, and flips it to stale on any
-change. *"A stale claim does not necessarily mean that the claim is wrong. It means that OpenWiki
-can no longer safely assume that the claim is still true without checking the source again."*
-
-Line-range binding needs no vocabulary. But it fires on every unrelated edit inside the range,
-which in a file people edit daily teaches the reader to ignore it. Key binding fires only when
-the DECISION moves. Use line ranges for evidence that is rarely edited, and keys for code and
-registries.
+⭐ **Bind to the decision, not to the text around it.** The alternative is to bind a claim to its
+evidence's LINE RANGE plus a version hash, and flip it on any change (OpenWiki works this way; see
+the README's *Related work*). Line-range binding needs no vocabulary. But it fires on every
+unrelated edit inside the range, which in a file people edit daily teaches the reader to ignore
+it. Key binding fires only when the DECISION moves. Use line ranges for evidence that is rarely
+edited, and keys for code and registries.
 
 *Origin: a code-quality audit of one repo found expired statuses that no probe round had
 registered. A tool still offered a lever whose test had been judged lost. Code comments still said

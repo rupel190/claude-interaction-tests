@@ -605,10 +605,11 @@ Meta's taxonomy work and LangChain's OpenWiki. Their loop:
 
 That loop is REACTIVE. It names its own limit: it *"cannot detect wrong answers nobody catches"*.
 Probes are the proactive half, because they provoke the miss before a real task reaches it. So a
-user can want both, as with authoring tools. Two things from that family are worth taking:
-- OpenWiki's claim binding, now guard pattern 9;
-- **re-running the probe bank after every index edit**, the way their suite re-runs on every
-  landing. Our rounds are manual; see *The harness already exists*.
+user can want both, as with authoring tools. There are two points of overlap:
+- **Claim-to-evidence binding.** Guard pattern 9 grew out of this file's expired-status finding of
+  2026-09-23, and binds to the key of the deciding artefact, where OpenWiki binds to line ranges.
+- **A suite that re-runs on every landing.** Our probe bank still re-runs by hand; see *The harness
+  already exists*.
 
 Their evidence is self-reported, without baselines. ⚠️ Do not cite it as a measurement.
 
