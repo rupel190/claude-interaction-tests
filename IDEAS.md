@@ -594,6 +594,24 @@ in its frontmatter.
    security; entries pin your repo at a sha. Locally, `claude plugin validate .` and
    `claude plugin tag`.
 
+**The other neighbour: self-repairing knowledge loops (seen 2026-10-02).** Several 2026 write-ups
+describe a wiki that fixes itself, among them dotzlaw.com's *AI-56 "The Wiki That Fixes Itself"*,
+Meta's taxonomy work and LangChain's OpenWiki. Their loop:
+- an expert corrects a wrong answer;
+- the loop diagnoses it as a recipe defect or a knowledge gap;
+- it compiles a minimal edit, which a reviewer sees as a bare diff;
+- it replays the failure blind and runs a regression suite that grows by one case per fix;
+- a human approves.
+
+That loop is REACTIVE. It names its own limit: it *"cannot detect wrong answers nobody catches"*.
+Probes are the proactive half, because they provoke the miss before a real task reaches it. So a
+user can want both, as with authoring tools. Two things from that family are worth taking:
+- OpenWiki's claim binding, now guard pattern 9;
+- **re-running the probe bank after every index edit**, the way their suite re-runs on every
+  landing. Our rounds are manual; see *The harness already exists*.
+
+Their evidence is self-reported, without baselines. ⚠️ Do not cite it as a measurement.
+
 **Open:** the name. `interaction-tests` already needs a disclaimer in the README against
 Storybook's unrelated meaning, and a directory listing gives you no room for a disclaimer —
 the description line does all the work. Worth deciding before submitting rather than after,
@@ -685,6 +703,10 @@ control* now carries this scope boundary.
 2. **Guard pattern 2 has the same blind spot.** It checks a plan row against the CODE. A lever built
    on a branch and merged back only as a finding leaves no code, so the check reads "still open".
    It is open whether a findings-aware variant can be written mechanically.
+   **Partly answered (2026-10-02):** yes, for a status that names its key. Guard pattern 9
+   (`reference/guards.md`) binds the claim to the artefact that DECIDES it, such as a verdict file
+   or the gate table, rather than to code presence. A judgement then flips the marker the moment its
+   file lands. A status that names no key stays with item 1.
 3. ⚠️ **The argued-past paragraph has more than one cause.** `reference/taxonomy.md` reads *"a probe
    argued its way past an entry"* as a latent over-fire, and prescribes narrowing the verdict. In
    this round the same tell appeared for two other causes. Once it was aimed at a plan hold that had

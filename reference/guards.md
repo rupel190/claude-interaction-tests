@@ -80,7 +80,7 @@ itself is responsible for being loud, not the shell.
 session began. A newly created `.claude/settings.json` needs `/hooks` opened once, or a restart,
 before its hooks fire.
 
-## The eight patterns
+## The nine patterns
 
 Each was found in production use, guarding a defect that had already happened.
 
@@ -227,6 +227,58 @@ raw and you get every `comparison_report.md` under `tests/output/`. Exclude the 
 first, or it produces noise and gets switched off — which is the failure mode this whole file is
 about. Direction A needs no scoping and is worth wiring up on its own.
 
+### 9. Claim ↔ evidence binding (**an expired status must flip, not wait to be found**)
+**Catches:** a STATUS or DEFAULT claim that was true when it was written and expired when its
+evidence changed: *"unjudged"* after the verdict landed, *"off by default"* after the default
+flipped, *"held until X"* after X shipped. Three things here are blind to it:
+- **Pattern 2** is blind when the change left no code behind, such as a judgement or a decision.
+- **Pre-registration** is blind too: it greps for the old answer, and an expired open marker has no
+  old answer to grep for (`IDEAS.md` § *Expired STATUS markers*).
+- **A probe** finds it only when it happens to open the file the marker sits in.
+
+**Shape:** bind each KIND of claim to the artefact that decides it, and compare the two
+mechanically, with no model call:
+
+| the claim | bound to | stale when |
+|---|---|---|
+| "X is off / on by default" | the code's default for X (the gate table, never a doc copy) | they disagree, or X no longer exists |
+| "S is staged / unjudged / awaiting a verdict" | the verdict artefact for S (a file, a closed ticket) | the artefact exists |
+| "held until D lands" | D's presence in the code or the registry | D is present |
+
+Three requirements make it survivable:
+1. **A claim must name its evidence KEY**, such as a gate name or a sitting id, so that plain words
+   never match. Take the vocabulary from the registry that owns the keys, never from a word list.
+2. **Historical forms are exempt by construction.** That covers a retraction clause like
+   *(said "unjudged" until 2026-09-29)* and phrases like "until <date>" or "was the default before".
+   This is why the index's retraction convention is load-bearing for the guard: without one
+   agreed form, every corrected entry reads as a stale one.
+3. **Classify the first run before making it fail** (§ *classify first*, below). Sort every hit
+   into stale, historical or false match. Fix the stale ones in place, and tune away the false ones
+   until none are left.
+
+⭐ **Bind to the decision, not to the text around it.** Prior art: LangChain's OpenWiki binds every
+claim to the line range of its evidence plus an evidence version, and flips it to stale on any
+change. *"A stale claim does not necessarily mean that the claim is wrong. It means that OpenWiki
+can no longer safely assume that the claim is still true without checking the source again."*
+
+Line-range binding needs no vocabulary. But it fires on every unrelated edit inside the range,
+which in a file people edit daily teaches the reader to ignore it. Key binding fires only when
+the DECISION moves. Use line ranges for evidence that is rarely edited, and keys for code and
+registries.
+
+*Origin: a code-quality audit of one repo found expired statuses that no probe round had
+registered. A tool still offered a lever whose test had been judged lost. Code comments still said
+"default off" a day after the default flipped. Every one was true when written, and every one had
+a machine-readable deciding artefact that nobody compared it to.*
+
+⚠️ **What it cannot see:**
+- a status claim that names no key (*"the outline work is still unjudged"*);
+- evidence that lands nowhere predictable, such as a decision taken in a chat.
+
+Those stay with the status sweep (`IDEAS.md` § *Expired STATUS markers*, *What to try* 1) and with
+pattern 7. So prefer key-naming status claims when you write an entry: the guard can only bind
+what the sentence names.
+
 ## ⛔ The cross-cutting failure: liveness is not completeness
 
 The most common defect **in the guards themselves**.
@@ -313,6 +365,7 @@ Guard a doc when it has at least one of:
 - a **copy** of something maintained elsewhere (pattern 4)
 - **structural rules** you rely on (pattern 5)
 - a **tool that reads it** (pattern 6)
+- a **status or default claim** whose deciding artefact can be enumerated (pattern 9)
 
 Leave alone: narrative, rationale, model references, session notes, anything with no machine-
 checkable counterpart. *In one repo this came to 8 documents guarded and 16 deliberately not —
