@@ -268,9 +268,31 @@ registered. A tool still offered a lever whose test had been judged lost. Code c
 "default off" a day after the default flipped. Every one was true when written, and every one had
 a machine-readable deciding artefact that nobody compared it to.*
 
+⭐ **The key can be one hop away: the LEVER hop.** A guard that binds "unjudged" to SITTING ids
+cannot see the commonest stale status in code: a lever's own docstring or registry row saying
+*"built, off, unjudged"*, keyed by the LEVER's name. The sitting that judged the lever is named
+nowhere near it. But verdict artefacts usually record what each arm SET (`GATE=1 — …`). That gives a
+second binding, just as mechanical: a status word beside a lever is stale once a verdict file's arm
+sets that lever. *Observed once, by a sweep run alongside a probe round:* nine expired "unjudged" /
+"proposable, UNJUDGED" statuses sat in gate registry rows, module docstrings, a converter comment and a
+menu file. They covered six levers, and a sitting-keyed guard passed every one. Two practical details:
+- **Look down the statement, not just the line.** In a registry, the key sits on one line and the
+  status twenty lines later, inside the same description string. Scan forward within the statement
+  (same indentation, no blank line, no next entry). Do this in code files only: a markdown paragraph
+  mixes subjects, and the status will be pinned on the wrong key.
+- **A sweep is a candidate list, not a verdict.** Nine of its thirteen hits were real. The rest were
+  history written in the present tense ("staged in round two") or a status pinned on the wrong key. `assets/round_prep.py routes
+  --verdicts <pathspec>` runs this sweep per route; a guard would run it per commit.
+
 ⚠️ **What it cannot see:**
 - a status claim that names no key (*"the outline work is still unjudged"*);
-- evidence that lands nowhere predictable, such as a decision taken in a chat.
+- evidence that lands nowhere predictable, such as a decision taken in a chat;
+- ⭐ **a DECISION with no artefact yet.** The owner says yes, and the yes is written only into a
+  handoff note while the work starts on a branch. Every status in the index is now expired, and there
+  is nothing for any binding to compare against until the branch merges. Probes that read the handoff
+  had the right answer; probes that trusted the inline status planned duplicate work
+  (`probes.md` § *Probing routes added in the last N days*). The only defence is a POINTER, not a
+  guard: the index tells an agent where live state is kept, at the moment it is about to build.
 
 Those stay with the status sweep (`IDEAS.md` § *Expired STATUS markers*, *What to try* 1) and with
 pattern 7. So prefer key-naming status claims when you write an entry: the guard can only bind

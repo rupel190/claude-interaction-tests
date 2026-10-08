@@ -61,7 +61,14 @@ Usage
 given. ``ROUND_DIR/predictions.md`` is read for a markdown table whose first cell starts with
 each label; its expected/predicted and confidence columns are copied into the table.
 ``ROUND_DIR/round.json`` may carry ``{"expect": [...], "expect_absent": [...], "sealed": [...]}``:
-strings the round assumes the delivered index DOES / does NOT carry, checked per probe.
+strings the round assumes the delivered index DOES / does NOT carry, checked per probe. It may also
+carry ``"targets": {"LABEL": ["path", "path § 8.12.7", "git:REGEX"], ...}`` — where each probe's
+answer LIVES. The skeleton then reports, per target, whether the trail REACHED it: ``read`` (a
+read whose line range overlaps the section, or the whole file), ``grep`` (searched, never read),
+``git`` (a git command matching REGEX — a handoff commit, a branch), or ``—``. ⭐ That is what
+separates *never found it* (a location problem: fix the route) from *found it and concluded wrong*
+(a content problem: fix the entry) — a split the scorer then makes by reading the body, because
+reaching is measurable and concluding is not.
 
 The config (``--config``, default ``extract.json`` beside this script, optional) is JSON:
     {"repo": "/path/to/repo-under-test",
@@ -849,7 +856,86 @@ def md_escape_cell(s: str) -> str:
     return s.replace("|", "\\|").replace("\n", " ")
 
 
-def analyse(pr: Probe, cfg: dict, repo: str) -> dict:
+def section_range(text: str, num: str) -> tuple[int, int] | None:
+    """1-based line span of section ``num`` (``8.12.7``) in markdown ``text``: a heading carrying
+    the number, or a paragraph that OPENS with it in bold (``**8.12.7 …**``), up to the next
+    heading of the same or a higher level (or the next bold-numbered paragraph)."""
+    lines = text.splitlines()
+    # the number must OPEN the heading (after markers, emoji and an optional §): a bare search
+    # would match "31" inside a date in an earlier heading
+    pat = re.compile(r"^(#{1,6})\s+(?:[^\w\s§]+\s*)*(?:§\s*)?" + re.escape(num) + r"(?![0-9]|\.[0-9])")
+    for i, ln in enumerate(lines):
+        m = pat.match(ln)
+        if m:
+            level = len(m.group(1))
+            for j in range(i + 1, len(lines)):
+                h = re.match(r"^(#{1,6})\s", lines[j])
+                if h and len(h.group(1)) <= level:
+                    return i + 1, j
+            return i + 1, len(lines)
+    pat2 = re.compile(r"^\*\*" + re.escape(num) + r"(?![0-9]|\.[0-9])")
+    for i, ln in enumerate(lines):
+        if pat2.match(ln):
+            for j in range(i + 1, len(lines)):
+                if re.match(r"^(#{1,6}\s|\*\*[0-9]+(?:\.[0-9]+)+(?![0-9.]))", lines[j]):
+                    return i + 1, j
+            return i + 1, len(lines)
+    return None
+
+
+def _file_text(path: str, repo: str, commit: str) -> str | None:
+    if commit and repo:
+        try:
+            out = subprocess.run(["git", "-C", repo, "show", f"{commit}:{path}"],
+                                 capture_output=True, text=True, timeout=10).stdout
+            if out:
+                return out
+        except (OSError, subprocess.SubprocessError):
+            pass
+    fp = Path(repo or ".") / path
+    return fp.read_text(errors="replace") if fp.exists() else None
+
+
+def reached(pr: Probe, targets: list[str], repo: str) -> list[tuple[str, str]]:
+    """Per target: ``read`` / ``grep`` / ``git`` / ``—`` — measured from the trail, never scored."""
+    out = []
+    for t in targets:
+        if t.startswith("git:"):
+            rx = re.compile(t[4:], re.I)
+            hit = any(s.kind == "git" and rx.search(s.target + " " + s.raw) for s in pr.steps)
+            out.append((t, "git" if hit else "—"))
+            continue
+        path, _, sec = t.partition("§")
+        path, sec = path.strip(), sec.strip()
+        span = None
+        if sec:
+            text = _file_text(path, repo, pr.git_head)
+            span = section_range(text, sec) if text else None
+        rank = {"—": 0, "grep": 1, "read elsewhere in file": 2, "read (whole file)": 3, "read": 4}
+        state = "—"
+        for s in pr.steps:
+            tgt = short(s.target, repo)
+            if not (tgt == path or tgt.endswith("/" + path) or path.endswith("/" + tgt)):
+                continue
+            got = "—"
+            if s.kind == "read":
+                if span is None or s.lines is None:
+                    got = "read" if span is None else "read (whole file)"
+                elif s.lines[0] <= span[1] and s.lines[1] >= span[0]:
+                    got = "read"
+                else:
+                    got = "read elsewhere in file"
+            elif s.kind == "search":
+                got = "grep"
+            if rank[got] > rank[state]:
+                state = got
+        if sec and span is None:
+            state += " (⚠️ section not found)"
+        out.append((t, state))
+    return out
+
+
+def analyse(pr: Probe, cfg: dict, repo: str, targets: list[str] | None = None) -> dict:
     body = pr.report
     informed_text, informed = split_informed(body)
     body_no_informed = body[: body.find(informed_text)] if informed_text else body
@@ -891,7 +977,8 @@ def analyse(pr: Probe, cfg: dict, repo: str) -> dict:
             "body_only_hedges": body_only_hedges,
             "first_decl": first_decl, "decl_index": decl_index, "rec": rec,
             "cited_closed": closed, "past_closed": past_closed,
-            "trail": trail(pr, repo)}
+            "trail": trail(pr, repo),
+            "reached": reached(pr, targets, repo) if targets else []}
 
 
 def first_cite_cell(a: dict) -> str:
@@ -982,8 +1069,9 @@ def render(probes: list[Probe], analyses: dict, preds: dict, cfg: dict, repo: st
     # ------------------------------------------------ table
     L.append("## Scorecard skeleton\n")
     L.append("| probe | predicted | rec (from body) | fired? | first cite (index hint → files in "
-             "tool order) | boilerplate | argued-past candidates | hedges in body |")
-    L.append("|---|---|---|---|---|---|---|---|")
+             "tool order) | target reached (measured) | concluded? | boilerplate | "
+             "argued-past candidates | hedges in body |")
+    L.append("|---|---|---|---|---|---|---|---|---|---|")
     for pr in probes:
         a = analyses[pr.label]
         row = preds.get(pr.label, {})
@@ -1001,9 +1089,10 @@ def render(probes: list[Probe], analyses: dict, preds: dict, cfg: dict, repo: st
         hed = str(len(a["hedges"])) if a["hedges"] else "0"
         if a["body_only_hedges"]:
             hed += f" (⛔ {len(a['body_only_hedges'])} outside its own TL;DR)"
+        reach = " · ".join(f"{t.split('/')[-1]}: {st}" for t, st in a["reached"]) or "—"
         L.append("| " + " | ".join(md_escape_cell(x) for x in [
-            pr.label, pred_cell[:160], a["rec"], "⬜", first_cite_cell(a), boiler, arg, hed])
-            + " |")
+            pr.label, pred_cell[:160], a["rec"], "⬜", first_cite_cell(a), reach, "⬜",
+            boiler, arg, hed]) + " |")
     L.append("")
 
     # ------------------------------------------------ per probe
@@ -1046,6 +1135,13 @@ def render(probes: list[Probe], analyses: dict, preds: dict, cfg: dict, repo: st
             terms = f" terms: {', '.join(f'`{t}`' for t in s.terms[:6])}" if s.terms else ""
             L.append(f"{s.n}. {s.kind} `{short(s.target, repo)}`{extra}{terms}")
         L.append("")
+        if a["reached"]:
+            L.append("### Targets — REACHED is measured here; CONCLUDED is the scorer's\n")
+            for t, st in a["reached"]:
+                L.append(f"- `{t}`: {st}")
+            L.append("\nScore each probe in one of four cells: reached + right · reached + WRONG "
+                     "(fix the entry's content) · not reached + right (another route; check it "
+                     "will last) · not reached + wrong (fix the route).\n")
         L.append("### Declared trail — first item of WHAT INFORMED YOU\n")
         L.append(f"{a['first_decl'][:400] or '⛔ no WHAT INFORMED YOU section found'}\n")
         L.append("### Flags (candidates — read each)\n")
@@ -1140,7 +1236,8 @@ def main(argv: list[str] | None = None) -> int:
 
     globs = args.transcript_glob + DEFAULT_TRANSCRIPT_GLOBS
     probes = [load_probe(lab, tid, globs, sealed) for lab, tid in pairs]
-    analyses = {pr.label: analyse(pr, cfg, repo) for pr in probes}
+    targets = round_cfg.get("targets", {})
+    analyses = {pr.label: analyse(pr, cfg, repo, targets.get(pr.label)) for pr in probes}
     preds = load_predictions(args.predictions or (args.round_dir / "predictions.md"))
     cmdline = "probe_extract.py " + " ".join(shlex.quote(a) for a in (argv or sys.argv[1:]))
     text = render(probes, analyses, preds, cfg, repo, expect, sealed, cmdline, expect_absent)

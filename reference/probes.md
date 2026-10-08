@@ -50,6 +50,12 @@ own**. Both are channels to material the probe must never see. Both have leaked 
 3. Have the extractor flag any tool input that touches the coordinator's scratchpad or a path
    outside the repo under test. A read there is a confound to score, not a free fact.
 
+⚠️ **The docs under test can point there too (observed once).** A findings file recorded where its
+evidence sheets lived: a session scratchpad, marked "scratch, not kept". Two probes pulled that section,
+and the path reached them in a tool RESULT. Neither opened it. When the scratchpad cannot be emptied (a
+long session's working material), seal it in the extractor and score only an OPENED path as a confound.
+A path a probe merely saw is not one.
+
 ## The five design rules
 
 1. **Blind.** Never mention the docs, the index, or that this is a test. The probe is a task. An
@@ -237,17 +243,39 @@ found scorecard claims the trail contradicted: a hedge the summary had dropped, 
 the row" that was really a pull.
 ⚠️ Two rounds, one codebase. The unrelated-codebase test is still to come.
 
+⚠️ **A fact can arrive through a channel that EXPIRES.** In one round a probe reached a fact the index
+did not carry, a gate's name, through its first command: `git log` and `git show` of the newest
+handoff commit, which happened to list that gate. Score that as reached. Then fix the durable route
+anyway, because the next handoff will not list the gate. The trail is where this shows: the declared
+trail credited the index, while the first tool call was `git log`.
+
 ## Scoring a run
 
 Count four things, and report them separately:
 
 ```
-should-fire probes caught          → recall
+should-fire probes caught          → recall (the VERDICT half)
+  … and right about TODAY          → the STATE half: in flight, owed, decided-not-written
 should-not-fire controls held      → precision
 predictions correct                → your model of the docs
 defects surfaced incidentally      → the real yield
 entries ARGUED PAST, on any probe  → latent over-firing the controls could not see
 ```
+
+⭐ **Score REACHED and CONCLUDED separately: they fail for different reasons and need different
+fixes.** Whether the trail reached the section that holds the answer can be MEASURED. Declare each
+probe's target sections in `round.json` (`"targets"`), and `assets/probe_extract.py` reports `read`,
+`grep`, `git` or `—` per target. Whether the probe concluded right is the scorer's call. Four cells:
+
+```
+reached + right       working
+reached + WRONG       a CONTENT defect: the entry, or the section it points to, says the wrong thing
+not reached + right   another route got there. Check it will last (a handoff, a guess)
+not reached + wrong   a ROUTE defect: fix the location, not the wording
+```
+
+One round on one codebase had no "reached + wrong" verdict. Its two misses were in the STATE half
+(next section), so a scorecard needs that column before the four cells mean anything.
 
 ⭐ **The fourth number is usually the largest.** Probes find contradictions between files as a side
 effect of answering an unrelated question — two probes asking about different topics converging on
@@ -286,6 +314,13 @@ whole probe would have thrown that away and left the run one measurement short.
 ✅ **So record the two separately, always** — the citation trail is cheap to keep and it is the
 half that survives almost every confound.
 
+⚠️ **The same split covers a probe the HARNESS killed (observed twice in one round).** The machine ran
+out of memory while two probes were mid-task. Each had made two tool calls and never handed back. Their
+first moves are still the index-fire measurement, and both had fired. Keep those first moves, void the
+conclusions, and re-dispatch the same text to a fresh agent under a new label. Never resume the killed
+agent: it has already been primed. And cap how many probes run at once by MEMORY, not by patience. A
+probe is light, but it shares the machine with whatever else the session is running.
+
 ### Not every miss costs the same — score the SHAPE of the failure
 
 A probe that does not fire can fail safely or expensively, and the difference is what decides
@@ -305,6 +340,53 @@ all; one expensive miss justifies the whole mechanism.
 
 ⚠️ This is also the distinction a static audit cannot produce. An audit tells you the fact is
 missing; only a probe tells you it will be confidently spoken over.
+
+## Probing routes added in the last N days — the verdict travels, the STATE does not
+
+A route the index gained recently is the cheapest high-yield target: it has never been probed, and it
+was written by a session in the middle of something else. `assets/round_prep.py routes --days N` turns
+the index's git history into one stub per added hunk. Each stub carries the hunk's text and date, the
+keys it names (gates, sitting ids, plan rows, symbols), and two sweeps per key:
+
+- **status lines**: every other line in the tree naming the key AND carrying a status word, with
+  retraction forms excluded. These are the stale copies to pre-register. With `--verdicts`, a status
+  such as "unjudged" beside a key that a verdict file's arm sets is flagged as judged
+  (`reference/guards.md` pattern 9, *the lever hop*).
+- **live state**: lines of the newest handoff commit, and commits on unmerged branches, that name
+  the key. This is the half of a route that no index line carries.
+
+⛔ The tool never writes the TASK. Draft that from the symptom, in words absent from the hunk (rule 2).
+
+⭐⭐ **Write the known answer in TWO halves, and score both.** The VERDICT half is what was judged:
+closed, judged at a cost, default since. The STATE half is what is true today and lives in no row: a
+decision taken but not yet written up, work sitting on a branch, a follow-up owed because of a merge.
+*Observed once (one round, one codebase, eight probes):*
+- The verdict half fired on all eight.
+- The state half was right for every probe that read the handoff commit or listed the unmerged
+  branches.
+- It was wrong for the two probes that stopped at an inline status in the index. One said
+  "unbuilt, a product decision"; the other said "never a default candidate". The owner had said yes
+  to both the day before, and the work sat on two branches. Both probes planned work that was already
+  in flight.
+- The rows had been corrected ON those branches, so this is not a stale row in the usual sense. It is
+  the WINDOW between a decision and its branch landing, and only a pointer to where the state lives
+  closes it. One trigger line in the index does that: *before you build a lever this file calls
+  unbuilt, read the handoff and the unmerged branches*. ⬜ Not yet re-probed.
+
+⚠️ So a should-fire probe that "fired" can still be the expensive miss. Score the state half in its
+own column, or a scorecard reads 8/8 over two probes that would have duplicated a branch.
+
+### Regression mode — re-run only what moved
+
+Between full rounds, `assets/round_prep.py regress --bank probes.md --since-commit <last round>`
+selects the banked probes whose authorities changed. Changed means a hunk touched the cited SECTION,
+not merely the file, or touched the plan ROW the probe names, or touched an index line naming one of
+its keys. ⚠️ Treat the selection as a floor:
+- Controls and the channel probe always re-run. Over-firing is born on a NEIGHBOURING entry, which
+  no diff of the probe's own target can see.
+- Over two busy weeks almost everything re-runs anyway. The mode pays only between close rounds.
+- A whole code file as an authority re-runs daily. Cite the symbol instead.
+⬜ Dry runs only so far. It has not yet selected a real round.
 
 ## How many probes
 

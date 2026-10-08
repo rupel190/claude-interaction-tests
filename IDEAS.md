@@ -309,6 +309,20 @@ Re-probes land in ground that was just cleaned, so a low yield is expected, and 
 the correction pass missed something. ⛔ The move itself is still unvalidated by this entry's own
 bar: three executions, one codebase, and each reader was an agent in the session being judged.
 
+### ⚖️ Fourth execution — the RUNNER folded the run back in, at the owner's request (2026-10-08)
+
+*An eight-probe round on routes the index had gained in the last four days, same codebase.*
+
+This time the owner asked the runner to improve the skill from the round, so no fresh reader was
+involved. By this entry's own rule, that counts for nothing toward validating the move. The second
+execution's prediction says where to look: the bias favours what the runner just BUILT. This round
+built two things: a sweep tool (`assets/round_prep.py`) and a measured "reached" column in the
+extractor. Its headline finding, that the verdict half fires while the state half does not, is
+exactly what the sweep's live-state column was designed to surface. ⚠️ The mitigation, which a fresh
+reader should check: the state-half hypothesis was written down in the sealed predictions before any
+probe ran, and the two misses are visible in the probes' own words ("once he says yes", "his call
+after the sitting"), against a handoff note dated the day before.
+
 ## A candidate seventh failure mode: ambiguity that propagates
 
 Same session, and it is not cleanly any of the six. A load-bearing sentence in a findings
@@ -346,6 +360,10 @@ entry's signature. The fix applied was **disambiguation in place** (define "newe
 entry's predicted fix. ⚠️ But the same line also lacked a HOW and a WHEN, which is plain partial
 instruction, and the fix added those clauses too. So it keeps the candidate open without
 establishing it. The case is written up under `reference/guards.md` pattern 7.
+
+⚠️ **2026-10-08: nothing again.** That makes three rounds since the possible second instance with
+no new case. By the rule above, it is time to close this as a variant of partial instruction. That
+call is the owner's, so it is left open here.
 
 ⛔ **The boundary.** One instance. It may just be partial instruction wearing a different
 coat, and calling it a mode on n=1 would be exactly the over-naming this skill warns
@@ -733,6 +751,23 @@ consequences:
   *What to try* 1 has to cover source docstrings and code comments, not only the index and the
   plan: search for the SYMBOL, and read the status words beside every hit.
 
+**2026-10-08: *What to try* 1, mechanised, and two things it taught.** `assets/round_prep.py routes`
+runs the status sweep for every key that the index's recent hunks name. On its first run it listed
+thirteen candidates, and nine were real: expired "unjudged" statuses in gate registry rows, module
+docstrings, a converter comment and a menu file. They covered six levers. The repo's claim guard
+(pattern 9) passed all nine.
+- **Why the guard missed them: the key was one hop away.** The guard binds a status word to a
+  SITTING id. These statuses sat beside a LEVER's name, and the sitting that judged the lever was
+  named nowhere near it. The verdict files record each arm's settings, so the lever → verdict hop is
+  mechanical. It now lives in `reference/guards.md` pattern 9 as *the lever hop*. ⬜ The repo's guard
+  does not do it yet; that is the owner's change to make.
+- **A status can expire with NO artefact at all.** Two probes acted on index statuses ("unbuilt, a
+  product decision"; "never a default candidate") that the owner's yes had expired the day before.
+  The yes existed only in a handoff note, and the work only on branches. Pattern 9 has nothing to
+  bind to, because nothing has landed. This is now a sub-case in `reference/taxonomy.md` §2 and a
+  scored column in `reference/probes.md`. ⬜ The proposed fix is a pointer in the index, triggered
+  at build time. It has not been re-probed: the fix sits on a branch, and probes load the main line.
+
 ## An always-loaded INSTRUCTION with no trigger fires everywhere
 
 *Raised 2026-09-23. A cut of an always-loaded index ADDED one line telling agents to perform a
@@ -768,6 +803,14 @@ the sync line or added a caveat, against seven of nine before. ⚠️ Three limi
 
 What would graduate it: the needing probe re-run against the rewritten line, and a second
 instruction, one unrelated to freshness, measured the same way.
+
+**2026-10-08: the needing half ran, unplanned.** One probe in an eight-probe round asked about a
+partner-facing page, so its answer did depend on the outside source. It ran the check the rewritten
+line describes: it compared the sync date with the outside notes' own DECLARED dates, not their
+modification times, and concluded that nothing newer applied. Of the seven probes that did not need
+the check, one wrote a no-op sentence ("was not consulted"), and one checked it for a product-scope
+question, arguably in scope. So the first half of the graduation bar is met, once. A second
+instruction, unrelated to freshness, is still unmeasured.
 
 ## Verifying a CUT of the always-loaded index: what an after-only round can and cannot show
 
