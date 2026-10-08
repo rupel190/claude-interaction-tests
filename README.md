@@ -72,7 +72,7 @@ None of these are findable by reading. Reading is what produced them.
 | `reference/taxonomy.md` | the six failure modes, their tells, and their fixes |
 | `reference/drift-protection.md` | rules and guards that stop the structure decaying |
 | `reference/planning-rows.md` | making decisions *citable* so contradictions can be found |
-| `assets/` | copy-in guard test, probe template, index scaffold |
+| `assets/` | copy-in guard test, probe template, index scaffold, and two runners: `probe_extract.py` (a round's transcripts → a scoring skeleton) and `round_prep.py` (probe stubs from the index's git history; which banked probes to re-run) |
 
 ## Works on any project
 

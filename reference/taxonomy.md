@@ -54,6 +54,15 @@ written wherever the thing is DEFINED, so search for the symbol, not only for th
 ⭐ **Tell to watch for: two probes on unrelated topics both citing the same third file.** That is
 staleness announcing itself.
 
+⚠️ **A sub-case with no superseding document yet: the decision IN FLIGHT.** The owner has decided and
+the work has started on a branch, but nothing on the main line says so except a handoff note. The
+index row is stale against a decision, not against a file, so no probe can "cite a different file".
+The tell is a probe that fires correctly and then plans the in-flight work as new. Observed twice in
+one round, on the two probes that trusted an inline status. **Fix:** not a correction, because the
+branch carries it. Give the index a POINTER to where live state is kept, triggered at the moment an
+agent is about to build. Score it in its own column (`probes.md` § *Probing routes added in the last
+N days*).
+
 ⛔ **The dangerous sub-case: the stale document is BETTER ARGUED than the thing that superseded
 it.** Reasoning accumulates in a repo — a position gets defended, measured, cross-referenced, and
 earns its place. The decision that overturns it arrives as one line in a meeting note, because

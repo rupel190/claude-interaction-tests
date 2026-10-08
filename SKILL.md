@@ -81,6 +81,13 @@ as licence to ship.
 ⭐ Where the two-sided question is the point — a gain with a cost — the entry needs **both** sides
 named, or the reader will act on the half that is written down.
 
+⚠️ **And one status no index can hold: IN FLIGHT.** The owner has decided and the work is on a
+branch, but the only record is a handoff note. Every inline status is then wrong, with nothing to
+correct it against until the branch merges. What fixes this is a pointer, not a row: tell the agent
+where live state is kept, at the moment it is about to build. Probe for it by writing every known
+answer in two halves, the VERDICT and today's STATE, and score them separately
+(`reference/probes.md` § *Probing routes added in the last N days*).
+
 ## Quick start
 
 ```
@@ -103,6 +110,11 @@ named, or the reader will act on the half that is written down.
     hand-added agent definitions in another — so an edit made this session reaches no probe.
     Edit → restart (resuming the same conversation is enough) → probe, and have the channel
     probe quote one line you changed since the restart
+[ ] Probing what the index GAINED lately? `assets/round_prep.py routes --days N` gives one
+    stub per new index hunk, its status-line candidates and its live state (handoff, unmerged
+    branches). Re-running a bank? `round_prep.py regress` selects what moved, as a floor
+[ ] Write each known answer in two halves, VERDICT and today's STATE, plus each probe's target
+    sections in round.json, so the extractor can MEASURE "reached" apart from "concluded"
 [ ] Run probes: one per fresh agent, blind, read-only, vocabulary NOT in the entry
 [ ] Extract the run with assets/probe_extract.py — score from the BODY it prints, never a summary
 [ ] Include should-NOT-fire controls — always

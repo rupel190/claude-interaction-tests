@@ -55,10 +55,16 @@ first. Without it a miss cannot be attributed to the boundary rather than to wea
 
 ## Scoring sheet
 
-| probe | proposal | phrased as | predicted | confidence | actual | first cite | argued past | read |
-|---|---|---|---|---|---|---|---|---|
-| P1 | | not in row | fires | | | | | |
-| C1 | | genuinely open | does NOT fire | | | | | |
+| probe | proposal | phrased as | predicted | confidence | reached (measured) | verdict half | state half | first cite | argued past | read |
+|---|---|---|---|---|---|---|---|---|---|---|
+| P1 | | not in row | fires | | | | | | | |
+| C1 | | genuinely open | does NOT fire | | | | — | | | |
+
+**reached** comes from the extractor (`"targets"` in `round.json`): did the trail read the section that
+holds the answer. **verdict half** is what was decided; **state half** is what is true today and sits in
+no row: work in flight, a decision not yet written up, a follow-up owed. Score the halves separately. A
+probe can fire perfectly and still plan work that is already on a branch
+(`reference/probes.md` § *Probing routes added in the last N days*).
 
 ⛔ **Fill "argued past" on EVERY probe, controls and should-fire alike**: name the entry, or write
 "none". Leave the column out and the count gets dropped. One run's scorecard had a column only for
