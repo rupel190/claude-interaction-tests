@@ -918,3 +918,37 @@ needs the most checking.
 ⬜ **Still open here: whether decoy placement for human sittings needs its own rule beyond that.**
 The candidate is never to place one on the features that complaints concentrate on. Settling it
 needs a second sitting in which a decoy fails.
+
+## A long-lived coordinator's subagents test its START, not HEAD — and a fresh headless process is the restart
+
+*Raised 2026-10-12, from an eight-probe round on routes an index gained over four busy days (one codebase).*
+
+The method already says the index a subagent receives is a snapshot from the parent's process start. This round
+measured how large that window gets in practice: the coordinating session had been running for four days, and a
+channel probe dispatched as its subagent carried the index as it stood four days earlier. Every default changed in
+that window read as OFF to it. ⭐ **The harm is not confined to probes.** Every worker that session dispatches —
+builders, investigators — works from the same stale index, so the window is a working hazard, not only a
+measurement one.
+
+✅ **What worked instead of a restart:** run each probe as a fresh headless process of the agent CLI (non-interactive
+print mode, the probe agent definition, edit tools disallowed, cwd = the repo, user hooks suppressed by the
+environment variable they already check). A channel probe run that way carried HEAD's files byte for byte. Costs to
+record: its system prompt is a main-session prompt (a different tool list), its transcript lands in the project's
+session directory rather than under the parent's subagents (the extractor needs a transcript glob), and the probe
+inherits none of the coordinator's scratchpad, which removes one confound for free.
+
+⬜ Not yet compared: whether headless and subagent probes on the SAME index recall differently.
+
+## State carried as "everything in X still holds" is a chain, and a pointer reads one link
+
+*Raised 2026-10-12, same round.*
+
+The previous round's fix — tell the agent to read the newest handoff and the unmerged branches before building —
+fired on all eight probes; seven made it their first move. The one state-half miss had a new shape: the fact (a
+deliverable shelved, its refresh waiting for the owner) lived in a handoff two links back, and each newer handoff
+said only *"everything in <previous> still holds"*. The probe read the newest handoff, which pointed onward, and did
+not follow it. Elsewhere the fact appeared only incidentally, in two findings sections about other subjects.
+
+**What to try:** a handoff restates every carried-over OPEN or STATE item rather than inheriting it by reference; or
+the pointer says "follow each *still holds* back". Better still, a standing state of a deliverable ("shelved since
+<date>") belongs on the deliverable's own index row and authority doc, dated — it outlives any number of handoffs.
